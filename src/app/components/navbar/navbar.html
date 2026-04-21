@@ -9,10 +9,10 @@
 
     <!-- CENTER (DESKTOP ONLY) -->
     <div class="hidden md:flex gap-10 text-gray-700 text-[15px] font-medium">
-      <a routerLink="/" class="hover:text-pink-400 transition">Home</a>
-      <a routerLink="/category/Baby Beds" class="hover:text-pink-400 transition">Beds</a>
-      <a routerLink="/category/Cradle Sets" class="hover:text-pink-400 transition">Cradles</a>
-      <a routerLink="/category/Accessories" class="hover:text-pink-400 transition">Accessories</a>
+      <a routerLink="/" class="hover:text-[#0F83B2] transition">Home</a>
+      <a routerLink="/shop" class="hover:text-[#0F83B2] transition">Shop</a>
+      <a routerLink="/blog" class="hover:text-[#0F83B2] transition">Journal</a>
+      <a routerLink="/contact" class="hover:text-[#0F83B2] transition">Contact</a>
     </div>
 
     <!-- RIGHT -->
@@ -29,9 +29,11 @@
       </div>
 
       <!-- Cart -->
-      <div class="relative cursor-pointer">
+      <div class="relative cursor-pointer" routerLink="/cart">
         <lucide-icon [img]="icons.cart" class="w-5 h-5 text-gray-700"></lucide-icon>
-        <span class="absolute -top-2 -right-2 bg-yellow-400 text-[10px] px-1 rounded-full">1</span>
+        <span *ngIf="cart.items().length > 0" class="absolute -top-2 -right-2 bg-red-400 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">
+          {{ cart.items().length }}
+        </span>
       </div>
 
       <!-- MOBILE MENU BUTTON -->

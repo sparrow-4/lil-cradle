@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LucideAngularModule, ShoppingCart, Search, Menu } from 'lucide-angular';
 import { MobileMenubar } from "../mobile-menubar/mobile-menubar";
+import { CartService } from "../../services/cart";
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,8 @@ import { MobileMenubar } from "../mobile-menubar/mobile-menubar";
 export class Navbar {
 
   isMenuOpen = false;
+
+  constructor(public cart: CartService) {}
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
