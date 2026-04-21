@@ -7,7 +7,15 @@ import { Blog } from './pages/blog/blog';
 import { Contact } from './pages/contact/contact';
 import { ProductDetail } from './pages/product-detail/product-detail';
 
+// Admin Imports
+import { AdminLogin } from './pages/admin-login/admin-login';
+import { AdminLayout } from './pages/admin-layout/admin-layout';
+import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
+import { AdminSettings } from './pages/admin-settings/admin-settings';
+import { AdminGuard } from './guards/admin.guard';
+
 export const routes: Routes = [
+  // Public Storefront routes
   { path: '', component: Home },
   { path: 'shop', component: Shop },
   { path: 'product/:id', component: ProductDetail },
@@ -15,4 +23,17 @@ export const routes: Routes = [
   { path: 'checkout', component: Checkout },
   { path: 'blog', component: Blog },
   { path: 'contact', component: Contact },
+
+  // Admin Routes
+  { path: 'login', component: AdminLogin },
+  { 
+    path: 'admin/dashboard', 
+    component: AdminLayout, 
+    canActivate: [AdminGuard],
+    children: [
+      { path: '', component: AdminDashboard },
+      { path: 'reports', component: AdminDashboard },
+      { path: 'settings', component: AdminSettings }
+    ]
+  }
 ];

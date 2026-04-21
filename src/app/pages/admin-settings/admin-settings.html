@@ -1,0 +1,72 @@
+<div class="space-y-6 max-w-4xl">
+
+  <div class="flex items-center justify-between mb-8">
+    <h2 class="text-2xl font-bold text-gray-800">Site Settings</h2>
+    <span class="text-sm text-gray-500 font-medium">Manage public content dynamically</span>
+  </div>
+
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+    
+    <form (ngSubmit)="saveChanges()" class="space-y-8">
+
+      <!-- Store Info -->
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 border-b pb-2 mb-4">Core Store Details</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Store Name</label>
+            <input type="text" [(ngModel)]="info.name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
+            <input type="text" [(ngModel)]="info.whatsapp" name="whatsapp" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Store Description (Footer)</label>
+            <textarea [(ngModel)]="info.description" name="desc" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 border-b pb-2 mb-4">Contact Information</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Contact Email</label>
+            <input type="email" [(ngModel)]="info.email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Contact Phone</label>
+            <input type="text" [(ngModel)]="info.phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 1</label>
+            <input type="text" [(ngModel)]="info.addressLine1" name="add1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
+            <input type="text" [(ngModel)]="info.addressLine2" name="add2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]">
+          </div>
+           <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Hours Line 1</label>
+            <input type="text" [(ngModel)]="info.hoursLine1" name="h1" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Hours Line 2</label>
+            <input type="text" [(ngModel)]="info.hoursLine2" name="h2" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#0F83B2] focus:border-[#0F83B2]">
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="pt-4 flex justify-end">
+         <button type="submit" class="px-8 py-3 bg-[#0F83B2] text-white font-bold rounded-full hover:bg-opacity-90 transition shadow-sm">
+           Apply Changes to Live Site
+         </button>
+      </div>
+
+    </form>
+    
+  </div>
+</div>

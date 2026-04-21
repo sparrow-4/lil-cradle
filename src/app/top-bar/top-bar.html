@@ -1,11 +1,25 @@
 <div class="bg-[#0F83B2] text-white py-1 relative">
-  
   <div class="max-w-[1440px] mx-auto flex justify-end items-center px-6 py-2 text-sm">
     <div class="space-x-4">
-      <a href="#">Login</a>
-      <a href="#">Register</a>
+      
+      <!-- Public / Not Logged In -->
+      <ng-container *ngIf="!auth.isAdmin() && !auth.isLoggedUser()">
+        <a routerLink="/login" class="hover:text-gray-200 transition font-medium">Login / Register</a>
+      </ng-container>
+
+      <!-- Logged in as User -->
+      <ng-container *ngIf="auth.isLoggedUser()">
+        <span class="font-bold">Welcome, Shopper!</span>
+        <button (click)="logout()" class="hover:text-gray-200 transition opacity-80 pl-2">Logout</button>
+      </ng-container>
+
+      <!-- Logged in as Admin -->
+      <ng-container *ngIf="auth.isAdmin()">
+        <a routerLink="/admin/dashboard" class="font-bold hover:text-gray-200 transition">⚙️ Admin Dashboard</a>
+        <button (click)="logout()" class="hover:text-gray-200 transition opacity-80 pl-2">Logout</button>
+      </ng-container>
+
     </div>
-  </div>
 
   <!-- Wave -->
   <div class="absolute -bottom-4 left-0 w-full overflow-hidden leading-none">

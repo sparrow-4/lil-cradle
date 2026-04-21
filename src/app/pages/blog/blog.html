@@ -7,40 +7,18 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     
-    <!-- Post 1 -->
-    <a href="#" class="group block">
-      <div class="w-full flex-shrink-0 mb-4 overflow-hidden rounded-2xl h-64 bg-[#f1f1f1]">
-        <img src="/images/bg.png" class="w-full h-full object-contain group-hover:scale-105 transition duration-700">
+    <!-- Blog Posts Loop -->
+    <a *ngFor="let post of posts" href="#" class="group block">
+      <div class="w-full flex-shrink-0 mb-4 overflow-hidden rounded-2xl h-64" [style.backgroundColor]="post.bg">
+        <img *ngIf="post.image" [src]="post.image" class="w-full h-full object-contain group-hover:scale-105 transition duration-700">
       </div>
-      <p class="text-sm text-[#0F83B2] font-semibold mb-2">EDUCATIONAL</p>
-      <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-[#0F83B2] transition">Why sorting blocks matter for early childhood development</h3>
-      <p class="text-gray-500 text-sm mb-4">Discover how simple shapes unlock the most foundational cognitive jumps in toddlers...</p>
-      <span class="text-xs text-gray-400 font-medium">April 12, 2026</span>
-    </a>
-
-    <!-- Post 2 -->
-    <a href="#" class="group block">
-      <div class="w-full flex-shrink-0 mb-4 overflow-hidden rounded-2xl h-64 bg-[#f8f9fa]">
-        <img src="/images/p1.jpg" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-      </div>
-      <p class="text-sm text-[#b89c84] font-semibold mb-2">LIFESTYLE</p>
-      <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-[#b89c84] transition">Designing the perfect eco-friendly nursery room</h3>
-      <p class="text-gray-500 text-sm mb-4">Creating a calming and sustainable space for your baby doesn't have to be hard...</p>
-      <span class="text-xs text-gray-400 font-medium">March 28, 2026</span>
-    </a>
-
-    <!-- Post 3 -->
-    <a href="#" class="group block">
-      <div class="w-full flex-shrink-0 mb-4 overflow-hidden rounded-2xl h-64 bg-[#EAF6FB]">
-        <div class="w-full h-full flex items-center justify-center bg-blue-50">
-           <!-- Placeholder for missing image -->
-           <span class="text-blue-200">Image</span>
-        </div>
-      </div>
-      <p class="text-sm text-[#0F83B2] font-semibold mb-2">TOY SAFETY</p>
-      <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-[#0F83B2] transition">Understanding non-toxic paints and materials</h3>
-      <p class="text-gray-500 text-sm mb-4">What to look for on the label before handing that new toy to your infant...</p>
-      <span class="text-xs text-gray-400 font-medium">Feb 15, 2026</span>
+      <p class="text-sm font-semibold mb-2" [style.color]="post.catColor">{{ post.category }}</p>
+      <h3 class="text-xl font-bold text-gray-800 mb-2 transition hover:opacity-80"
+          [style.color]="'#1f2937'">
+        {{ post.title }}
+      </h3>
+      <p class="text-gray-500 text-sm mb-4">{{ post.desc }}</p>
+      <span class="text-xs text-gray-400 font-medium">{{ post.date }}</span>
     </a>
 
   </div>

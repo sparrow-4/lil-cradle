@@ -44,17 +44,17 @@
       <div class="space-y-8">
         <div>
           <h4 class="text-[#0F83B2] font-semibold text-sm uppercase tracking-wider mb-2">Store Address</h4>
-          <p class="text-gray-600">Lil Cradle Store<br>123 Baby Avenue, Suite 100<br>New York, NY 10001</p>
+          <p class="text-gray-600">{{ info.name }}<br>{{ info.addressLine1 }}<br>{{ info.addressLine2 }}</p>
         </div>
 
         <div>
           <h4 class="text-[#0F83B2] font-semibold text-sm uppercase tracking-wider mb-2">Direct Contact</h4>
-          <p class="text-gray-600">hello@lilcradle.com<br>+1 (555) 123-4567</p>
+          <p class="text-gray-600">{{ info.email }}<br>{{ info.phone }}</p>
         </div>
 
         <div>
           <h4 class="text-[#0F83B2] font-semibold text-sm uppercase tracking-wider mb-2">Working Hours</h4>
-          <p class="text-gray-600">Monday - Friday: 9am - 8pm<br>Saturday - Sunday: 10am - 6pm</p>
+          <p class="text-gray-600">{{ info.hoursLine1 }}<br>{{ info.hoursLine2 }}</p>
         </div>
         
         <div class="pt-6 border-t border-gray-200 object-cover rounded-xl overflow-hidden shadow-inner h-48 bg-gray-100 flex items-center justify-center text-gray-400">

@@ -19,7 +19,7 @@
     <div>
       <img src="images/lil-c.png" alt="Lil Cradle Logo" class="h-12 mb-4 object-contain">
       <p class="text-gray-500 text-sm leading-relaxed mb-6">
-        Creating magical moments with premium, safe, and beautiful toys for your little ones.
+        {{ info.description }}
       </p>
       <div class="flex gap-4">
         <!-- Social Icons Placeholders -->
@@ -34,23 +34,22 @@
 
     <!-- Links 1 -->
     <div>
-      <h4 class="font-bold text-gray-800 mb-4">Shop</h4>
+      <h4 class="font-bold text-gray-800 mb-4">Quick Links</h4>
       <ul class="space-y-3 text-sm text-gray-500">
-        <li><a href="#" class="hover:text-[#0F83B2] transition">Baby Beds</a></li>
-        <li><a href="#" class="hover:text-[#0F83B2] transition">Cradle Sets</a></li>
-        <li><a href="#" class="hover:text-[#0F83B2] transition">Accessories</a></li>
-        <li><a href="#" class="hover:text-[#0F83B2] transition">New Arrivals</a></li>
+        <li><a routerLink="/" class="hover:text-[#0F83B2] transition">Home</a></li>
+        <li><a routerLink="/shop" class="hover:text-[#0F83B2] transition">Shop Now</a></li>
+        <li><a routerLink="/blog" class="hover:text-[#0F83B2] transition">Journal</a></li>
+        <li><a routerLink="/contact" class="hover:text-[#0F83B2] transition">Contact Us</a></li>
       </ul>
     </div>
 
     <!-- Links 2 -->
     <div>
-      <h4 class="font-bold text-gray-800 mb-4">About</h4>
+      <h4 class="font-bold text-gray-800 mb-4">Contact Info</h4>
       <ul class="space-y-3 text-sm text-gray-500">
-        <li><a href="#" class="hover:text-[#0F83B2] transition">Our Story</a></li>
-        <li><a href="#" class="hover:text-[#0F83B2] transition">Contact Us</a></li>
-        <li><a href="#" class="hover:text-[#0F83B2] transition">Store Locator</a></li>
-        <li><a href="#" class="hover:text-[#0F83B2] transition">Careers</a></li>
+        <li>{{ info.addressLine1 }}<br>{{ info.addressLine2 }}</li>
+        <li><a href="mailto:{{ info.email }}" class="hover:text-[#0F83B2] transition">{{ info.email }}</a></li>
+        <li>{{ info.phone }}</li>
       </ul>
     </div>
 
@@ -68,7 +67,7 @@
   </div>
 
   <div class="max-w-[1200px] mx-auto px-6 mt-12 pt-6 border-t border-gray-100 text-center flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
-    <p>© 2026 Lil Cradle. All rights reserved.</p>
+    <p>{{ info.copyright }}</p>
     <div class="flex gap-4 mt-2 md:mt-0">
       <a href="#" class="hover:text-gray-600 transition">Privacy Policy</a>
       <a href="#" class="hover:text-gray-600 transition">Terms of Service</a>

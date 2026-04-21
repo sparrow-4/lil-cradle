@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { AdminAuthService } from '../services/admin-auth';
+import { AdminAuthService } from '../../services/admin-auth';
 
 @Component({
-  selector: 'app-top-bar',
+  selector: 'app-admin-layout',
   imports: [CommonModule, RouterModule],
-  templateUrl: './top-bar.html',
-  styleUrl: './top-bar.css',
+  templateUrl: './admin-layout.html',
+  styleUrl: './admin-layout.css',
 })
-export class TopBar {
-  constructor(public auth: AdminAuthService, private router: Router) {}
+export class AdminLayout {
+  constructor(private auth: AdminAuthService, private router: Router) {}
 
   logout() {
     this.auth.logout();

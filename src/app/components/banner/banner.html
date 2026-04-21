@@ -1,73 +1,52 @@
-<section class="w-full flex justify-center py-12 bg-gray-100">
-  <div
-    class="w-full max-w-[1200px] bg-[#b89c84] rounded-xl relative overflow-hidden flex flex-col md:flex-row items-center px-6 md:px-12"
-  >
-
-    <!-- LEFT CONTENT -->
-    <div class="w-full md:w-1/2 text-white py-10 md:py-16 z-10 pl-6">
-      <p class="text-sm tracking-wide font-medium text-white/90 mb-3 uppercase">Welcome to Lil Cradle</p>
-
-      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-8">
-        Play, learn, <br />
-        & grow!
-      </h1>
-
-      <button
-        class="bg-[#0F83B2] text-white font-medium px-8 py-3.5 rounded-full hover:bg-white hover:text-[#0F83B2] transition shadow-lg"
-      >
-        Shop now
-      </button>
-    </div>
-
-    <!-- RIGHT IMAGE -->
-    <div
-      class="w-full md:w-1/2 relative flex justify-center items-end h-[280px] md:h-[420px]"
+<section class="w-full relative bg-gray-50 flex justify-center py-6 overflow-hidden min-h-[400px] md:min-h-[500px]">
+  
+  <ng-container *ngFor="let banner of banners; let i = index">
+    <div 
+      class="w-[95%] max-w-[1200px] rounded-xl overflow-hidden flex flex-col md:flex-row items-center px-6 md:px-12 absolute left-1/2 -translate-x-1/2 top-4 bottom-12 transition-opacity duration-1000 ease-in-out"
+      [style.backgroundColor]="banner.bgColor"
+      [class.opacity-100]="i === activeIndex"
+      [class.opacity-0]="i !== activeIndex"
+      [class.z-10]="i === activeIndex"
+      [class.-z-10]="i !== activeIndex"
+      style="height: calc(100% - 3rem);"
     >
 
-      <!-- Background circle -->
-      <div
-        class="absolute w-[260px] h-[260px] bg-white/20 rounded-full right-8 bottom-10 hidden md:block"
-      ></div>
+      <!-- LEFT CONTENT -->
+      <div class="w-full md:w-1/2 text-white py-10 md:py-16 z-20 pl-6">
+        <p class="text-xs md:text-sm tracking-widest uppercase mb-3 text-white/90 font-medium">{{ banner.tagline }}</p>
 
-      <!-- IMAGE FIX -->
-      <img
-        src="/images/bg.png"
-        alt="banner"
-        class="relative z-10 h-[90%] md:h-[100%] object-contain drop-shadow-lg"
-      />
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-8" [innerHTML]="banner.headline"></h1>
+
+        <a [routerLink]="banner.buttonLink" class="inline-block bg-white text-gray-800 font-bold px-8 py-3.5 rounded-full hover:bg-opacity-90 transition shadow-lg">
+          {{ banner.buttonText }}
+        </a>
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="w-full md:w-1/2 relative flex justify-center items-end h-[280px] md:h-[100%] z-20 pt-10">
+        <div class="absolute w-[260px] h-[260px] bg-white/20 rounded-full md:right-8 md:bottom-10 hidden md:block"></div>
+        <img [src]="banner.image" alt="Hero Banner" class="relative z-10 h-[90%] md:h-[100%] object-contain drop-shadow-2xl translate-y-4" />
+      </div>
+
+      <!-- WAVE -->
+      <div class="absolute bottom-0 left-0 w-full leading-none z-10">
+        <svg viewBox="0 0 1200 60" preserveAspectRatio="none" class="w-full h-10 block">
+          <path d="M0,60 L0,30 Q30,0 60,30 T120,30 T180,30 T240,30 T300,30 T360,30 T420,30 T480,30 T540,30 T600,30 T660,30 T720,30 T780,30 T840,30 T900,30 T960,30 T1020,30 T1080,30 T1140,30 T1200,30 L1200,60 Z" fill="#f9fafb" />
+        </svg>
+      </div>
 
     </div>
+  </ng-container>
 
-    <!-- ✅ FIXED WAVE -->
-    <div class="absolute bottom-0 left-0 w-full leading-none">
-      <svg viewBox="0 0 1200 60" preserveAspectRatio="none" class="w-full h-10 block">
-        <path
-          d="M0,60 L0,30 
-             Q30,0 60,30 
-             T120,30 
-             T180,30 
-             T240,30 
-             T300,30 
-             T360,30 
-             T420,30 
-             T480,30 
-             T540,30 
-             T600,30 
-             T660,30 
-             T720,30 
-             T780,30 
-             T840,30 
-             T900,30 
-             T960,30 
-             T1020,30 
-             T1080,30 
-             T1140,30 
-             T1200,30 
-             L1200,60 Z"
-          fill="#f3f4f6"
-        />
-      </svg>
-    </div>
-
+  <!-- Navigation Dots -->
+  <div class="absolute bottom-10 left-0 w-full flex justify-center gap-3 z-30">
+    <button *ngFor="let b of banners; let i = index" 
+      (click)="setBanner(i)"
+      class="w-3 h-3 rounded-full transition-all duration-300 shadow-sm"
+      [class.bg-white]="i === activeIndex"
+      [class.w-8]="i === activeIndex"
+      [class.bg-white.opacity-50]="i !== activeIndex">
+    </button>
   </div>
+
 </section>
