@@ -7,10 +7,13 @@ import { TopBar } from '../../top-bar/top-bar';
 import { Banner } from "../../components/banner/banner";
 import { Category } from "../category/category";
 import { ProductCardComponent } from "../../components/product-card/product-card";
+import { PromoBanners } from "../../components/promo-banners/promo-banners";
+import { FeaturesBar } from "../../components/features-bar/features-bar";
+import { Footer } from "../../components/footer/footer";
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, Navbar, TopBar, Banner, Category, ProductCardComponent],
+  imports: [CommonModule, Navbar, TopBar, Banner, Category, PromoBanners, ProductCardComponent, FeaturesBar, Footer],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
