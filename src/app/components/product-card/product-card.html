@@ -1,21 +1,82 @@
-<div class="bg-white rounded-2xl shadow-md p-4 hover:shadow-lg transition">
+<section class="w-full py-16 bg-gray-50 flex justify-center">
 
-  <img 
-    [src]="product.images[0]" 
-    class="w-full h-48 object-cover rounded-xl mb-4"
-  />
+  <div class="w-full max-w-[1200px] px-4">
 
-  <h2 class="text-lg font-semibold">{{ product.name }}</h2>
+    <!-- TITLE -->
+    <h2 class="text-2xl md:text-3xl font-semibold text-center mb-4">
+      Top picks for your little ones
+    </h2>
 
-  <p class="text-gray-500">
-    From ₹{{ product.sizes[0].price }}
-  </p>
+    <!-- TABS -->
+    <div class="flex justify-center gap-4 mb-10">
 
-  <a 
-    [routerLink]="['/product', product.id]"
-    class="block mt-3 text-center bg-[#E8CFC5] py-2 rounded-full"
-  >
-    View
-  </a>
+      <button 
+        (click)="activeTab='featured'"
+        [class.bg-purple-100]="activeTab==='featured'"
+        class="px-4 py-1 rounded-full text-sm">
+        Featured
+      </button>
 
-</div>
+      <button 
+        (click)="activeTab='best'"
+        [class.bg-purple-100]="activeTab==='best'"
+        class="px-4 py-1 rounded-full text-sm">
+        Best seller
+      </button>
+
+      <button 
+        (click)="activeTab='new'"
+        [class.bg-purple-100]="activeTab==='new'"
+        class="px-4 py-1 rounded-full text-sm">
+        New arrivals
+      </button>
+
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+      <div *ngFor="let p of products" class="bg-white rounded-xl p-4 shadow-sm group">
+
+        <!-- IMAGE -->
+        <div class="relative">
+
+          <img [src]="p.image" class="w-full h-[180px] object-contain">
+
+          <!-- SALE BADGE -->
+          <span *ngIf="p.sale" class="absolute top-2 left-2 bg-red-400 text-white text-xs px-2 py-1 rounded">
+            SALE
+          </span>
+
+        </div>
+
+        <!-- TITLE -->
+        <h3 class="text-sm mt-3 text-gray-700">
+          {{ p.name }}
+        </h3>
+
+        <!-- PRICE -->
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-green-600 font-semibold">
+            ${{ p.price }}
+          </span>
+
+          <span *ngIf="p.oldPrice" class="text-gray-400 line-through text-sm">
+            ${{ p.oldPrice }}
+          </span>
+        </div>
+
+        <!-- RATING -->
+        <div class="flex text-yellow-400 text-sm mt-1">
+          <span *ngFor="let star of [1,2,3,4,5]">
+            {{ star <= p.rating ? '★' : '☆' }}
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

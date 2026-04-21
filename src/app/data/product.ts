@@ -1,28 +1,62 @@
 export const PRODUCTS = [
   {
-    id: 1,
-    name: "Nest Bed",
-    category: "Baby Beds",
-    images: ["https://picsum.photos/300"],
-    colors: ["Cream", "Green", "Pink"],
-    sizes: [
-      { size: "S", price: 1500 },
-      { size: "M", price: 1700 },
-      { size: "L", price: 1850 },
-      { size: "XL", price: 1950 }
-    ]
+    name: 'Blocks shape-sorting Toy',
+    price: 29,
+    oldPrice: 39,
+    image: '/images/p1.jpg',
+    rating: 4,
+    sale: true,
+    type: 'featured' 
   },
   {
-    id: 2,
-    name: "Round Bed",
-    category: "Baby Beds",
-    images: ["https://picsum.photos/300"],
-    colors: ["White", "Beige"],
-    sizes: [
-      { size: "S", price: 2000 },
-      { size: "M", price: 2200 },
-      { size: "L", price: 2400 },
-      { size: "XL", price: 2500 }
-    ]
+    name: 'Toy Unicorn',
+    price: 29,
+    oldPrice: 39,
+    image: '/images/p1.jpg',
+    rating: 5,
+    sale: true,
+    type: 'best'
+  },
+  {
+    name: 'Ring Toy',
+    price: 39,
+    image: '/images/p1.jpg',
+    rating: 3,
+    type: 'new' 
+  },
+  {
+    name: 'Soft Deer',
+    price: 39,
+    image: '/images/p1.jpg',
+    rating: 5,
+    type: 'featured' 
+  },
+  {
+    name: 'Ring Toy',
+    price: 39,
+    image: '/images/p1.jpg',
+    rating: 3,
+    type: 'new' 
+  },
+  {
+    name: 'Soft Deer',
+    price: 39,
+    image: '/images/p1.jpg',
+    rating: 5,
+    type: 'featured' 
+  },
+  {
+    name: 'Ring Toy',
+    price: 39,
+    image: '/images/p1.jpg',
+    rating: 3,
+    type: 'new' 
+  },
+  {
+    name: 'Soft Deer',
+    price: 39,
+    image: '/images/p1.jpg',
+    rating: 5,
+    type: 'featured' 
   }
 ];

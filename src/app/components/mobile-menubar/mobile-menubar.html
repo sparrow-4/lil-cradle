@@ -1,4 +1,6 @@
-<!-- MOBILE MENU BUTTON -->
+<div *ngIf="isReady">
+
+  <!-- MOBILE MENU BUTTON -->
 <button (click)="toggleMenu()" class="md:hidden relative z-50">
   <lucide-icon 
     [img]="isMenuOpen ? icons.close : icons.menu" 
@@ -106,5 +108,7 @@
     </button>
 
   </div>
+
+</div>
 
 </div>

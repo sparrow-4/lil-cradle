@@ -12,9 +12,20 @@ import { LucideAngularModule, ShoppingCart, Search, Menu, X } from 'lucide-angul
 export class MobileMenubar {
   
   isMenuOpen = false;
+isReady = false;
+
+ngOnInit() {
+  const saved = localStorage.getItem('menuOpen');
+  this.isMenuOpen = saved === 'true';
+
+  this.isReady = true; 
+}
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+
+    // save state
+    localStorage.setItem('menuOpen', String(this.isMenuOpen));
   }
 
   icons = {
