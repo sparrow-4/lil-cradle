@@ -1,43 +1,28 @@
 import { Routes } from '@angular/router';
-import { Home } from './pages/home/home';
-import { Shop } from './pages/shop/shop';
-import { Cart } from './pages/cart/cart';
-import { Checkout } from './pages/checkout/checkout';
-import { Blog } from './pages/blog/blog';
-import { Contact } from './pages/contact/contact';
-import { ProductDetail } from './pages/product-detail/product-detail';
-
-// Admin Imports
-import { AdminLogin } from './pages/admin-login/admin-login';
-import { AdminLayout } from './pages/admin-layout/admin-layout';
-import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
-import { AdminSettings } from './pages/admin-settings/admin-settings';
-import { AdminOrders } from './pages/admin-orders/admin-orders';
-import { AdminProducts } from './pages/admin-products/admin-products';
 import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   // Public Storefront routes
-  { path: '', component: Home },
-  { path: 'shop', component: Shop },
-  { path: 'product/:id', component: ProductDetail },
-  { path: 'cart', component: Cart },
-  { path: 'checkout', component: Checkout },
-  { path: 'blog', component: Blog },
-  { path: 'contact', component: Contact },
+  { path: '', loadComponent: () => import('./pages/home/home').then(m => m.Home) },
+  { path: 'shop', loadComponent: () => import('./pages/shop/shop').then(m => m.Shop) },
+  { path: 'product/:id', loadComponent: () => import('./pages/product-detail/product-detail').then(m => m.ProductDetail) },
+  { path: 'cart', loadComponent: () => import('./pages/cart/cart').then(m => m.Cart) },
+  { path: 'checkout', loadComponent: () => import('./pages/checkout/checkout').then(m => m.Checkout) },
+  { path: 'blog', loadComponent: () => import('./pages/blog/blog').then(m => m.Blog) },
+  { path: 'contact', loadComponent: () => import('./pages/contact/contact').then(m => m.Contact) },
 
   // Admin Routes
-  { path: 'login', component: AdminLogin },
+  { path: 'login', loadComponent: () => import('./pages/admin-login/admin-login').then(m => m.AdminLogin) },
   { 
     path: 'admin/dashboard', 
-    component: AdminLayout, 
+    loadComponent: () => import('./pages/admin-layout/admin-layout').then(m => m.AdminLayout), 
     canActivate: [AdminGuard],
     children: [
-      { path: '', component: AdminDashboard },
-      { path: 'reports', component: AdminDashboard },
-      { path: 'orders', component: AdminOrders },
-      { path: 'products', component: AdminProducts },
-      { path: 'settings', component: AdminSettings }
+      { path: '', loadComponent: () => import('./pages/admin-dashboard/admin-dashboard').then(m => m.AdminDashboard) },
+      { path: 'reports', loadComponent: () => import('./pages/admin-dashboard/admin-dashboard').then(m => m.AdminDashboard) },
+      { path: 'orders', loadComponent: () => import('./pages/admin-orders/admin-orders').then(m => m.AdminOrders) },
+      { path: 'products', loadComponent: () => import('./pages/admin-products/admin-products').then(m => m.AdminProducts) },
+      { path: 'settings', loadComponent: () => import('./pages/admin-settings/admin-settings').then(m => m.AdminSettings) }
     ]
   }
 ];

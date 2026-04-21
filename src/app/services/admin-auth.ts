@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,15 @@ export class AdminAuthService {
   private adminKey = 'lil_cradle_admin_logged_in';
   private userKey = 'lil_cradle_user_logged_in';
   
-  isAdmin = signal<boolean>(localStorage.getItem(this.adminKey) === 'true');
-  isLoggedUser = signal<boolean>(localStorage.getItem(this.userKey) === 'true');
+  isAdmin = signal<boolean>(false);
+  isLoggedUser = signal<boolean>(false);
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.isAdmin.set(localStorage.getItem(this.adminKey) === 'true');
+      this.isLoggedUser.set(localStorage.getItem(this.userKey) === 'true');
+    }
+  }
 
   login(email: string, pass: string): 'admin' | 'user' | 'error' {
     if (email === 'admin@gmail.com' && pass === 'admin123') {

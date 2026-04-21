@@ -1,5 +1,29 @@
-<app-banner></app-banner>
-<app-category></app-category>
-<app-promo-banners></app-promo-banners>
-<app-product-card></app-product-card>
-<app-features-bar></app-features-bar>
+@defer {
+  <app-banner></app-banner>
+} @placeholder {
+  <div class="h-[500px] w-full animate-pulse bg-gray-50 flex items-center justify-center text-gray-400">Loading Banner...</div>
+}
+
+@defer (on viewport) {
+  <app-category></app-category>
+} @placeholder {
+  <div class="h-64 w-full animate-pulse bg-white"></div>
+}
+
+@defer (on viewport) {
+  <app-promo-banners></app-promo-banners>
+} @placeholder {
+  <div class="h-96 w-full animate-pulse bg-white"></div>
+}
+
+@defer (on viewport) {
+  <app-product-card></app-product-card>
+} @placeholder {
+  <div class="h-[600px] w-full animate-pulse bg-white"></div>
+}
+
+@defer (on viewport) {
+  <app-features-bar></app-features-bar>
+} @placeholder {
+  <div class="h-32 w-full animate-pulse bg-gray-50"></div>
+}

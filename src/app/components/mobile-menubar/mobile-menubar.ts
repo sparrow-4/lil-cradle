@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { LucideAngularModule, ShoppingCart, Search, Menu, X } from 'lucide-angular';
+import { AdminAuthService } from '../../services/admin-auth';
 
 @Component({
   selector: 'app-mobile-menubar',
@@ -10,6 +11,8 @@ import { LucideAngularModule, ShoppingCart, Search, Menu, X } from 'lucide-angul
   styleUrl: './mobile-menubar.css',
 })
 export class MobileMenubar {
+  
+  constructor(public auth: AdminAuthService, private router: Router) {}
   
   isMenuOpen = false;
 isReady = false;
@@ -26,6 +29,12 @@ ngOnInit() {
 
     // save state
     localStorage.setItem('menuOpen', String(this.isMenuOpen));
+  }
+
+  logout() {
+    this.auth.logout();
+    this.toggleMenu();
+    this.router.navigate(['/login']);
   }
 
   icons = {
