@@ -14,12 +14,19 @@ export class ProductDetail implements OnInit {
   product: any;
   quantity = 1;
 
+  isLoading = true;
+
   constructor(private route: ActivatedRoute, private cart: CartService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
+      this.isLoading = true; // reset in case of route parameter change
       const name = params.get('id');
       this.product = PRODUCTS.find(p => p.name === name) || PRODUCTS[0]; 
+
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 700);
     });
   }
 

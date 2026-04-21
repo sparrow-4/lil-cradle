@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,7 +11,8 @@ import { OrderService } from '../../services/order';
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })
-export class Checkout {
+export class Checkout implements OnInit {
+  isLoading = true;
   customer = {
     name: '',
     phone: '',
@@ -20,6 +21,12 @@ export class Checkout {
   };
 
   constructor(public cart: CartService, private orderService: OrderService, private router: Router) {}
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 700);
+  }
 
   placeOrder() {
     if(!this.customer.name || !this.customer.phone || !this.customer.address) {

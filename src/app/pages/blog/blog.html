@@ -5,12 +5,23 @@
     <p class="text-gray-600">Read on for parenting tips, new arrivals, and the importance of developmental play for your little ones.</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <!-- Skeleton Grid -->
+  <div *ngIf="isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div *ngFor="let m of [1,2,3]" class="flex flex-col">
+      <div class="h-64 w-full shimmer rounded-2xl mb-4"></div>
+      <div class="w-1/4 h-4 shimmer rounded mb-2"></div>
+      <div class="w-full h-8 shimmer rounded mb-2"></div>
+      <div class="w-3/4 h-4 shimmer rounded mb-4"></div>
+      <div class="w-1/5 h-3 shimmer rounded"></div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     
     <!-- Blog Posts Loop -->
     <a *ngFor="let post of posts" href="#" class="group block">
       <div class="w-full flex-shrink-0 mb-4 overflow-hidden rounded-2xl h-64" [style.backgroundColor]="post.bg">
-        <img *ngIf="post.image" [src]="post.image" class="w-full h-full object-contain group-hover:scale-105 transition duration-700">
+        <img *ngIf="post.image" [src]="post.image" loading="lazy" class="w-full h-full object-contain group-hover:scale-105 transition duration-700">
       </div>
       <p class="text-sm font-semibold mb-2" [style.color]="post.catColor">{{ post.category }}</p>
       <h3 class="text-xl font-bold text-gray-800 mb-2 transition hover:opacity-80"
