@@ -12,6 +12,8 @@ import { AdminLogin } from './pages/admin-login/admin-login';
 import { AdminLayout } from './pages/admin-layout/admin-layout';
 import { AdminDashboard } from './pages/admin-dashboard/admin-dashboard';
 import { AdminSettings } from './pages/admin-settings/admin-settings';
+import { AdminOrders } from './pages/admin-orders/admin-orders';
+import { AdminProducts } from './pages/admin-products/admin-products';
 import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
@@ -33,6 +35,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: AdminDashboard },
       { path: 'reports', component: AdminDashboard },
+      { path: 'orders', component: AdminOrders },
+      { path: 'products', component: AdminProducts },
       { path: 'settings', component: AdminSettings }
     ]
   }

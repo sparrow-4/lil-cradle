@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CartService } from '../../services/cart';
+import { OrderService } from '../../services/order';
 
 @Component({
   selector: 'app-checkout',
@@ -17,7 +19,7 @@ export class Checkout {
     city: ''
   };
 
-  constructor(public cart: CartService) {}
+  constructor(public cart: CartService, private orderService: OrderService, private router: Router) {}
 
   placeOrder() {
     if(!this.customer.name || !this.customer.phone || !this.customer.address) {
@@ -48,5 +50,17 @@ export class Checkout {
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${number}?text=${encodedMessage}`, '_blank');
+
+    // Save to Admin system
+    this.orderService.addOrder({
+      firstName: this.customer.name,
+      phone: this.customer.phone,
+      address: this.customer.address,
+      city: this.customer.city
+    }, this.cart.items(), total);
+
+    // Clear cart and redirect
+    this.cart.items.set([]);
+    this.router.navigate(['/']);
   }
 }
