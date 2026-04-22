@@ -13,7 +13,14 @@ const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 // Middleware
-app.use(cors({ origin: ['http://localhost:4200', 'http://localhost:4300'] }));
+app.use(cors({ 
+  origin: [
+    'http://localhost:4200', 
+    'http://localhost:4300', 
+    /\.vercel\.app$/ // Allow all Vercel deployments
+  ],
+  credentials: true 
+}));
 app.use(express.json({ limit: '10mb' }));
 
 // Serve uploaded images as static files
