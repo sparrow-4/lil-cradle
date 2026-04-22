@@ -31,7 +31,7 @@ export class PromoBanners {
             tag: 'Customizable',
             headline: 'Handmade Luxury Hampers',
             buttonText: 'Customize Now',
-            image: '/images/p2.jpg',
+            image: '/images/img1.png',
             bgColor: '#FDF7F2',
             tagColor: '#C49A4A',
             buttonBg: '#C49A4A'

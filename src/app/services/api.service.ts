@@ -12,14 +12,15 @@ export class ApiService {
   getImageUrl(path: string): string {
     if (!path) return '/images/p1.jpg';
     if (path.startsWith('http')) return path;
-    if (path.startsWith('/')) {
-      // If production and path is relative, prepend the API base (without /api suffix)
+    if (path.startsWith('/uploads/')) {
+      // If production and path is a backend upload, prepend the API base
       if (environment.production) {
         const base = environment.apiUrl.replace('/api', '');
         return `${base}${path}`;
       }
       return path;
     }
+    // For local assets like /images/... or relative paths, keep as is
     return path;
   }
 
