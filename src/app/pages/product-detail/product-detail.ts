@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart';
 import { ApiService } from '../../services/api.service';
+import { AdminAuthService } from '../../services/admin-auth';
 
 import { FormsModule } from '@angular/forms';
 
@@ -25,9 +26,20 @@ export class ProductDetail implements OnInit {
   };
   isSubmittingReview = false;
 
-  constructor(private route: ActivatedRoute, private cart: CartService, public api: ApiService) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private cart: CartService, 
+    public api: ApiService,
+    public auth: AdminAuthService
+  ) {}
 
   ngOnInit() {
+    // Pre-fill user name from account if logged in
+    const user = this.auth.currentUser();
+    if (user) {
+      this.reviewData.userName = user.name;
+    }
+
     this.route.paramMap.subscribe(params => {
       this.isLoading = true;
       const name = params.get('id');
