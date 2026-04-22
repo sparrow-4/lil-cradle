@@ -81,6 +81,20 @@ router.put('/categories', async (req, res) => {
   }
 });
 
+// PUT update promos
+router.put('/promos', async (req, res) => {
+  try {
+    const content = await SiteContent.findOneAndUpdate(
+      { key: 'main' },
+      { promoBanners: req.body },
+      { new: true }
+    );
+    res.json(content.promoBanners);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 // POST upload image for any section (banner, category, promo)
 router.post('/upload/:section/:index', upload.single('image'), async (req, res) => {
   try {

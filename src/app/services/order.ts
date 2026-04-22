@@ -48,6 +48,35 @@ export class OrderService {
     return this.totalRevenue() / count;
   });
 
+  salesByDay = computed(() => {
+    const days = 7;
+    const result = [];
+    const now = new Date();
+    
+    for (let i = 0; i < days; i++) {
+      const d = new Date();
+      d.setDate(now.getDate() - (days - 1 - i));
+      const dateStr = d.toLocaleDateString();
+      
+      const total = this.orders()
+        .filter(o => o.date.includes(dateStr) && o.status !== 'Cancelled')
+        .reduce((sum, o) => sum + o.total, 0);
+        
+      result.push({
+        label: d.toLocaleDateString('en-US', { weekday: 'short' }),
+        value: total,
+        date: dateStr
+      });
+    }
+    
+    // Normalize heights (0-100%)
+    const max = Math.max(...result.map(r => r.value), 100);
+    return result.map(r => ({
+      ...r,
+      height: (r.value / max) * 90 // Max height 90% for UI padding
+    }));
+  });
+
   addOrder(customerData: any, cartItems: any[], totalCost: number) {
     const newOrder = {
       customerName: customerData.firstName + ' ' + (customerData.lastName || ''),

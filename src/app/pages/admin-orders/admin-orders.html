@@ -36,7 +36,7 @@
           <div class="col-span-1 text-xs text-gray-600">
             <p *ngFor="let item of order.items" class="truncate">- {{ item.qty }}x {{ item.name }}</p>
           </div>
-          <div class="col-span-1 font-bold text-gray-900 text-sm">${{ order.total | number:'1.2-2' }}</div>
+          <div class="col-span-1 font-bold text-gray-900 text-sm">₹{{ order.total | number:'1.2-2' }}</div>
           <div class="col-span-1 flex justify-end">
             <button (click)="cycleStatus($any(order)._id || order.id, order.status)"
               class="px-3 py-1.5 text-xs font-bold uppercase tracking-wide rounded hover:opacity-80 transition cursor-pointer"
@@ -84,7 +84,7 @@
           <div class="text-xs text-gray-600 space-y-0.5">
             <p *ngFor="let item of order.items">• {{ item.qty }}x {{ item.name }}</p>
           </div>
-          <span class="font-bold text-gray-900 text-base">${{ order.total | number:'1.2-2' }}</span>
+          <span class="font-bold text-gray-900 text-base">₹{{ order.total | number:'1.2-2' }}</span>
         </div>
       </div>
     </div>

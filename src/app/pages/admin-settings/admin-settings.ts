@@ -13,6 +13,7 @@ export class AdminSettings {
   info: any = {};
   banners: any[] = [];
   categories: any[] = [];
+  promoBanners: any[] = [];
   
   constructor(private api: ApiService) {
     this.api.getSiteContent().subscribe(data => {
@@ -20,6 +21,7 @@ export class AdminSettings {
          if(data.companyInfo) this.info = data.companyInfo;
          if(data.heroBanners) this.banners = data.heroBanners;
          if(data.categories) this.categories = data.categories;
+         if(data.promoBanners) this.promoBanners = data.promoBanners;
       }
     });
   }
@@ -61,6 +63,7 @@ export class AdminSettings {
       this.api.uploadSiteImage(section, index, file).subscribe(data => {
         if(section === 'banner') this.banners[index].image = data.imageUrl;
         if(section === 'category') this.categories[index].image = data.imageUrl;
+        if(section === 'promo') this.promoBanners[index].image = data.imageUrl;
       });
     }
   }
@@ -69,6 +72,7 @@ export class AdminSettings {
     this.api.updateCompanyInfo(this.info).subscribe();
     this.api.updateBanners(this.banners).subscribe();
     this.api.updateCategories(this.categories).subscribe();
+    this.api.updatePromoBanners(this.promoBanners).subscribe();
     alert('All settings saved to database!');
   }
 }

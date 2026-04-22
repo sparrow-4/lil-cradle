@@ -19,11 +19,14 @@ const promoSchema = new mongoose.Schema({
   tag:                String,
   tagColor:           String,
   headline:           String,
-  headlineHoverColor: String,
+  subHeadline:        String,
+  description:        String,
   buttonText:         String,
-  buttonBg:           String,
+  buttonLink:         String,
   image:              String,
-  bgColor:            String
+  bgColor:            String,
+  badgeCount:         String,
+  badgeText:          String
 }, { _id: true });
 
 const featureSchema = new mongoose.Schema({

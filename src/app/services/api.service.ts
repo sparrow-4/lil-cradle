@@ -60,6 +60,10 @@ export class ApiService {
     return this.http.put<any>(`${this.api}/site-content/categories`, categories);
   }
 
+  updatePromoBanners(promos: any[]): Observable<any> {
+    return this.http.put<any>(`${this.api}/site-content/promos`, promos);
+  }
+
   uploadSiteImage(section: string, index: number, file: File): Observable<any> {
     const formData = new FormData();
     formData.append('image', file);

@@ -12,11 +12,15 @@ import { ApiService } from '../../services/api.service';
 })
 export class CustomCta {
   whatsapp = '';
+  promo: any = null;
   
   constructor(private api: ApiService) {
     this.api.getSiteContent().subscribe(data => {
-      if(data && data.companyInfo) {
-        this.whatsapp = data.companyInfo.whatsapp;
+      if(data) {
+        if(data.companyInfo) this.whatsapp = data.companyInfo.whatsapp;
+        if(data.promoBanners && data.promoBanners.length > 0) {
+          this.promo = data.promoBanners[0];
+        }
       }
     });
   }
