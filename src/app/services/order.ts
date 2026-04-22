@@ -21,10 +21,14 @@ export interface Order {
 export class OrderService {
   private api = inject(ApiService);
   orders = signal<Order[]>([]);
+  products = signal<any[]>([]);
 
   constructor() {
     this.api.getOrders().subscribe(data => {
       this.orders.set(data);
+    });
+    this.api.getProducts().subscribe(data => {
+      this.products.set(data);
     });
   }
 
@@ -34,6 +38,21 @@ export class OrderService {
       // Don't count cancelled orders in revenue
       if(order.status !== 'Cancelled') return acc + order.total;
       return acc;
+    }, 0);
+  });
+
+  totalProfit = computed(() => {
+    return this.orders().reduce((acc, order) => {
+      if (order.status === 'Cancelled') return acc;
+      
+      const orderProfit = order.items.reduce((itemAcc, item) => {
+        // Find product to get its current costPrice
+        const product = this.products().find(p => p.name === item.name);
+        const cost = product ? product.costPrice : 0;
+        return itemAcc + ((item.price - cost) * item.qty);
+      }, 0);
+      
+      return acc + orderProfit;
     }, 0);
   });
 

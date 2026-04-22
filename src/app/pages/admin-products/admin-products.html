@@ -21,9 +21,10 @@
         <div class="col-span-2">Category</div>
         <div class="col-span-1 text-center">Type</div>
         <div class="col-span-1">Price (₹)</div>
+        <div class="col-span-1">Org Price</div>
         <div class="col-span-1">Old Price</div>
         <div class="col-span-1 text-center">Sale</div>
-        <div class="col-span-2 text-right pr-4">Actions</div>
+        <div class="col-span-1 text-right pr-4">Actions</div>
       </div>
       <div class="divide-y divide-gray-100 min-w-[640px]">
         <div *ngFor="let product of products"
@@ -58,6 +59,10 @@
           <div class="col-span-1 pr-2 relative">
             <input type="number" [(ngModel)]="product.price"
               class="w-full py-1 text-sm font-bold text-gray-900 border border-transparent hover:border-gray-300 focus:border-green-500 rounded bg-transparent focus:bg-white transition outline-none">
+          </div>
+          <div class="col-span-1 pr-2 relative">
+            <input type="number" [(ngModel)]="product.costPrice" placeholder="Cost"
+              class="w-full py-1 text-sm text-blue-600 border border-transparent hover:border-gray-300 focus:border-blue-400 rounded bg-transparent focus:bg-white transition outline-none">
           </div>
           <div class="col-span-1 pr-2 relative">
             <input type="number" [(ngModel)]="product.oldPrice" placeholder="None"
@@ -107,16 +112,21 @@
           </div>
         </div>
         <!-- Prices -->
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-3 gap-3">
           <div class="relative">
-            <span class="absolute left-2 top-2 text-gray-400 font-bold text-xs">₹</span>
+            <span class="absolute left-1 top-2 text-gray-400 font-bold text-[10px]">P:₹</span>
             <input type="number" [(ngModel)]="product.price"
-              class="w-full pl-5 pr-2 py-1.5 text-xs font-bold text-gray-900 border border-gray-200 focus:border-green-500 rounded outline-none">
+              class="w-full pl-6 pr-1 py-1.5 text-xs font-bold text-gray-900 border border-gray-200 focus:border-green-500 rounded outline-none" title="Selling Price">
           </div>
           <div class="relative">
-            <span class="absolute left-2 top-2 text-gray-400 text-xs">₹</span>
+            <span class="absolute left-1 top-2 text-blue-400 font-bold text-[10px]">C:₹</span>
+            <input type="number" [(ngModel)]="product.costPrice"
+              class="w-full pl-6 pr-1 py-1.5 text-xs font-bold text-blue-600 border border-gray-200 focus:border-blue-400 rounded outline-none" title="Cost Price">
+          </div>
+          <div class="relative">
+            <span class="absolute left-1 top-2 text-gray-400 text-[10px]">O:₹</span>
             <input type="number" [(ngModel)]="product.oldPrice" placeholder="Old"
-              class="w-full pl-5 pr-2 py-1.5 text-xs text-gray-500 border border-gray-200 focus:border-gray-400 rounded outline-none">
+              class="w-full pl-6 pr-1 py-1.5 text-xs text-gray-500 border border-gray-200 focus:border-gray-400 rounded outline-none" title="Old Price">
           </div>
         </div>
         <!-- Sale toggle + Delete -->

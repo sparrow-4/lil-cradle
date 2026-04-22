@@ -26,8 +26,10 @@ export class AdminProducts {
     const newProduct = {
       name: 'New Product',
       price: 0,
+      costPrice: 0,
       oldPrice: null,
       type: 'featured',
+      category: 'Uncategorized',
       rating: 5,
       sale: false
     };
