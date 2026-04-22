@@ -43,12 +43,14 @@
         <div *ngFor="let p of filteredProducts()"
              class="bg-white rounded-xl p-3 sm:p-4 shadow-sm group border border-gray-100 relative flex flex-col">
           <!-- Image -->
-          <div class="relative bg-[#f8f9fa] rounded-lg">
-            <img [src]="api.getImageUrl(p.image)" class="w-full h-[140px] sm:h-[200px] object-contain">
+          <a [routerLink]="['/product', p.name]" class="block relative bg-[#f8f9fa] rounded-lg overflow-hidden">
+            <img [src]="api.getImageUrl(p.image)" class="w-full h-[140px] sm:h-[200px] object-contain group-hover:scale-105 transition-transform duration-500">
             <span *ngIf="p.sale" class="absolute top-2 left-2 bg-[#b89c84] text-white text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded shadow">SALE</span>
-          </div>
+          </a>
 
-          <h3 class="font-medium text-gray-800 mt-3 text-sm sm:text-base leading-tight">{{ p.name }}</h3>
+          <a [routerLink]="['/product', p.name]" class="block mt-3">
+            <h3 class="font-medium text-gray-800 text-sm sm:text-base leading-tight hover:text-[#0F83B2] transition-colors">{{ p.name }}</h3>
+          </a>
           <div class="flex items-center gap-1.5 mt-1 mb-3">
             <span class="text-[#0F83B2] font-bold text-sm sm:text-base">₹{{ p.price }}</span>
             <span *ngIf="p.oldPrice" class="text-gray-400 line-through text-xs">₹{{ p.oldPrice }}</span>
