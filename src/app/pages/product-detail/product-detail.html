@@ -65,4 +65,68 @@
     </div>
   </div>
 
+  <!-- ── REVIEWS SECTION ── -->
+  <div class="mt-20 pt-20 border-t border-gray-100">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+      
+      <!-- Review List -->
+      <div class="lg:col-span-2 space-y-8">
+        <h3 class="text-2xl font-bold text-gray-800 flex items-center gap-3">
+          Customer Reviews 
+          <span class="text-sm font-medium text-gray-400 bg-gray-100 px-3 py-1 rounded-full">{{ reviews.length }}</span>
+        </h3>
+        
+        <div *ngIf="reviews.length === 0" class="py-12 text-center bg-gray-50 rounded-3xl border border-dashed border-gray-200">
+          <p class="text-gray-500 italic">No reviews yet. Be the first to share your experience!</p>
+        </div>
+
+        <div *ngFor="let rev of reviews" class="pb-8 border-b border-gray-50">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-[#0F83B2] font-bold text-sm">
+              {{ rev.userName[0].toUpperCase() }}
+            </div>
+            <div>
+              <p class="font-bold text-gray-800 text-sm">{{ rev.userName }}</p>
+              <div class="flex text-yellow-400 text-[10px]">
+                {{ '★'.repeat(rev.rating) }}{{ '☆'.repeat(5 - rev.rating) }}
+              </div>
+            </div>
+            <span class="ml-auto text-xs text-gray-400">{{ rev.createdAt | date:'mediumDate' }}</span>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed pl-13">"{{ rev.comment }}"</p>
+        </div>
+      </div>
+
+      <!-- Add Review Form -->
+      <div class="bg-[#F8F9FA] p-8 rounded-[2.5rem] border border-gray-100">
+        <h3 class="text-xl font-bold text-gray-800 mb-6">Write a Review</h3>
+        <form (submit)="submitReview()" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Your Name</label>
+            <input type="text" name="userName" [(ngModel)]="reviewData.userName" class="w-full px-4 py-3 rounded-2xl border-none bg-white shadow-sm focus:ring-2 focus:ring-[#0F83B2] outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Rating</label>
+            <select name="rating" [(ngModel)]="reviewData.rating" class="w-full px-4 py-3 rounded-2xl border-none bg-white shadow-sm focus:ring-2 focus:ring-[#0F83B2] outline-none text-sm">
+              <option [value]="5">5 Stars - Excellent</option>
+              <option [value]="4">4 Stars - Very Good</option>
+              <option [value]="3">3 Stars - Good</option>
+              <option [value]="2">2 Stars - Fair</option>
+              <option [value]="1">1 Star - Poor</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Your Thoughts</label>
+            <textarea name="comment" [(ngModel)]="reviewData.comment" rows="4" class="w-full px-4 py-3 rounded-2xl border-none bg-white shadow-sm focus:ring-2 focus:ring-[#0F83B2] outline-none text-sm resize-none" placeholder="Share your experience with this product..."></textarea>
+          </div>
+          <button type="submit" [disabled]="isSubmittingReview" class="w-full bg-[#0F83B2] text-white font-bold py-4 rounded-2xl hover:bg-opacity-90 transition shadow-lg disabled:opacity-50">
+            {{ isSubmittingReview ? 'Submitting...' : 'Post Review' }}
+          </button>
+          <p class="text-[10px] text-gray-400 text-center px-4">Your review will be visible after it has been approved by our team.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
 </section>

@@ -26,6 +26,8 @@ export const routes: Routes = [
       { path: 'reports', loadComponent: () => import('./pages/admin-dashboard/admin-dashboard').then(m => m.AdminDashboard) },
       { path: 'orders', loadComponent: () => import('./pages/admin-orders/admin-orders').then(m => m.AdminOrders) },
       { path: 'products', loadComponent: () => import('./pages/admin-products/admin-products').then(m => m.AdminProducts) },
+      { path: 'messages', loadComponent: () => import('./pages/admin-messages/admin-messages').then(m => m.AdminMessages) },
+      { path: 'reviews', loadComponent: () => import('./pages/admin-reviews/admin-reviews').then(m => m.AdminReviews) },
       { path: 'profile', loadComponent: () => import('./pages/admin-profile/admin-profile').then(m => m.AdminProfile) },
       { path: 'settings', loadComponent: () => import('./pages/admin-settings/admin-settings').then(m => m.AdminSettings) }
     ]

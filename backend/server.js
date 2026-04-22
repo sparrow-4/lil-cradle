@@ -51,6 +51,8 @@ app.use('/images', express.static(path.join(__dirname, '../src/assets/images')))
 app.use('/api/products', require('./routes/products'));
 app.use('/api/site-content', require('./routes/site-content'));
 app.use('/api/orders', require('./routes/orders'));
+app.use('/api/messages', require('./routes/messages'));
+app.use('/api/reviews', require('./routes/reviews'));
 
 // Health check
 app.get('/api/health', (req, res) => {

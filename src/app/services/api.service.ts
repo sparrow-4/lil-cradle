@@ -102,4 +102,42 @@ export class ApiService {
   deleteOrder(id: string): Observable<any> {
     return this.http.delete<any>(`${this.api}/orders/${id}`);
   }
+
+  // ── MESSAGES ──
+  getMessages(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}/messages`);
+  }
+
+  sendMessage(message: any): Observable<any> {
+    return this.http.post<any>(`${this.api}/messages`, message);
+  }
+
+  updateMessageStatus(id: string, status: string): Observable<any> {
+    return this.http.put<any>(`${this.api}/messages/${id}/status`, { status });
+  }
+
+  deleteMessage(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.api}/messages/${id}`);
+  }
+
+  // ── REVIEWS ──
+  getReviews(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}/reviews`);
+  }
+
+  getProductReviews(productId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.api}/reviews/product/${productId}`);
+  }
+
+  submitReview(review: any): Observable<any> {
+    return this.http.post<any>(`${this.api}/reviews`, review);
+  }
+
+  toggleReviewApproval(id: string): Observable<any> {
+    return this.http.put<any>(`${this.api}/reviews/${id}/approve`, {});
+  }
+
+  deleteReview(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.api}/reviews/${id}`);
+  }
 }
