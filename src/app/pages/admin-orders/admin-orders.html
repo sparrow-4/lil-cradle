@@ -25,7 +25,7 @@
         <div *ngFor="let order of orderService.orders()"
              class="grid grid-cols-6 gap-3 p-4 items-start hover:bg-slate-50 transition">
           <div class="col-span-1">
-            <p class="font-bold text-gray-800 text-sm">{{ order.id }}</p>
+            <p class="font-bold text-gray-800 text-sm">{{ $any(order).orderId || order.id }}</p>
             <span class="text-[10px] text-gray-400 font-normal block mt-0.5">{{ order.date }}</span>
           </div>
           <div class="col-span-2">
@@ -38,7 +38,7 @@
           </div>
           <div class="col-span-1 font-bold text-gray-900 text-sm">${{ order.total | number:'1.2-2' }}</div>
           <div class="col-span-1 flex justify-end">
-            <button (click)="cycleStatus(order.id, order.status)"
+            <button (click)="cycleStatus($any(order)._id || order.id, order.status)"
               class="px-3 py-1.5 text-xs font-bold uppercase tracking-wide rounded hover:opacity-80 transition cursor-pointer"
               [ngClass]="{
                 'bg-yellow-100 text-yellow-800': order.statusColor === 'yellow',
@@ -59,10 +59,10 @@
         <!-- Top row: ID + status -->
         <div class="flex items-center justify-between">
           <div>
-            <p class="font-bold text-gray-800 text-sm">{{ order.id }}</p>
+            <p class="font-bold text-gray-800 text-sm">{{ $any(order).orderId || order.id }}</p>
             <p class="text-xs text-gray-400">{{ order.date }}</p>
           </div>
-          <button (click)="cycleStatus(order.id, order.status)"
+          <button (click)="cycleStatus($any(order)._id || order.id, order.status)"
             class="px-3 py-1.5 text-xs font-bold uppercase tracking-wide rounded-full hover:opacity-80 transition"
             [ngClass]="{
               'bg-yellow-100 text-yellow-800': order.statusColor === 'yellow',

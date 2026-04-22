@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { PRODUCTS } from '../../data/product';
 import { CartService } from '../../services/cart';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,17 +16,23 @@ export class ProductDetail implements OnInit {
 
   isLoading = true;
 
-  constructor(private route: ActivatedRoute, private cart: CartService) {}
+  constructor(private route: ActivatedRoute, private cart: CartService, private api: ApiService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.isLoading = true; // reset in case of route parameter change
+      this.isLoading = true;
       const name = params.get('id');
-      this.product = PRODUCTS.find(p => p.name === name) || PRODUCTS[0]; 
-
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 700);
+      
+      this.api.getProducts().subscribe({
+        next: (data) => {
+          this.product = data.find((p: any) => p.name === name) || data[0];
+          setTimeout(() => this.isLoading = false, 700);
+        },
+        error: (err) => {
+          console.error('Failed to load product', err);
+          this.isLoading = false;
+        }
+      });
     });
   }
 

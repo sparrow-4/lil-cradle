@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SITE_CONTENT } from '../../data/site-content';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-admin-settings',
@@ -10,9 +10,34 @@ import { SITE_CONTENT } from '../../data/site-content';
   styleUrl: './admin-settings.css',
 })
 export class AdminSettings {
-  info = SITE_CONTENT.companyInfo;
+  info: any = {};
+  banners: any[] = [];
+  categories: any[] = [];
+  
+  constructor(private api: ApiService) {
+    this.api.getSiteContent().subscribe(data => {
+      if(data) {
+         if(data.companyInfo) this.info = data.companyInfo;
+         if(data.heroBanners) this.banners = data.heroBanners;
+         if(data.categories) this.categories = data.categories;
+      }
+    });
+  }
+
+  uploadImage(event: any, section: string, index: number) {
+    const file = event.target.files[0];
+    if (file) {
+      this.api.uploadSiteImage(section, index, file).subscribe(data => {
+        if(section === 'banner') this.banners[index].image = data.imageUrl;
+        if(section === 'category') this.categories[index].image = data.imageUrl;
+      });
+    }
+  }
 
   saveChanges() {
-    alert('Settings successfully updated in live memory!');
+    this.api.updateCompanyInfo(this.info).subscribe();
+    this.api.updateBanners(this.banners).subscribe();
+    this.api.updateCategories(this.categories).subscribe();
+    alert('All settings saved to database!');
   }
 }

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SITE_CONTENT } from '../../data/site-content';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-category',
@@ -10,5 +10,12 @@ import { SITE_CONTENT } from '../../data/site-content';
   styleUrl: './category.css',
 })
 export class Category {
-  categories = SITE_CONTENT.categories;
+  categories: any[] = [];
+  constructor(private api: ApiService) {
+    this.api.getSiteContent().subscribe(data => {
+      if(data && data.categories) {
+         this.categories = data.categories;
+      }
+    });
+  }
 }

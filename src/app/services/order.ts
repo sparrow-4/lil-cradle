@@ -1,7 +1,10 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { ApiService } from './api.service';
 
 export interface Order {
-  id: string;
+  id: string; // Legacy ID
+  _id?: string; // MongoDB ID
+  orderId?: string; // MongoDB generated friendly ID
   customerName: string;
   customerPhone: string;
   customerAddress: string;
@@ -16,7 +19,14 @@ export interface Order {
   providedIn: 'root'
 })
 export class OrderService {
+  private api = inject(ApiService);
   orders = signal<Order[]>([]);
+
+  constructor() {
+    this.api.getOrders().subscribe(data => {
+      this.orders.set(data);
+    });
+  }
 
   // Analytics computed signals
   totalRevenue = computed(() => {
@@ -39,29 +49,29 @@ export class OrderService {
   });
 
   addOrder(customerData: any, cartItems: any[], totalCost: number) {
-    const newOrder: Order = {
-      id: '#ORD-' + Math.floor(1000 + Math.random() * 9000).toString(),
+    const newOrder = {
       customerName: customerData.firstName + ' ' + (customerData.lastName || ''),
       customerPhone: customerData.phone,
       customerAddress: customerData.address + ', ' + customerData.city,
-      date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       items: cartItems,
-      total: totalCost,
-      status: 'Pending',
-      statusColor: 'yellow' // Yellow for pending/processing
+      total: totalCost
     };
 
-    this.orders.update(current => [newOrder, ...current]);
+    this.api.createOrder(newOrder).subscribe(data => {
+      this.orders.update(current => [data, ...current]);
+    });
   }
 
   updateOrderStatus(orderId: string, newStatus: Order['status']) {
-    let newColor = 'yellow';
-    if (newStatus === 'Shipped') newColor = 'green';
-    if (newStatus === 'Delivered') newColor = 'blue';
-    if (newStatus === 'Cancelled') newColor = 'red';
+    // Only _id is the real mongo id
+    const order = this.orders().find(o => o.id === orderId || (o as any)._id === orderId);
+    if(!order) return;
+    const realId = (order as any)._id || orderId;
 
-    this.orders.update(orders => 
-      orders.map(o => o.id === orderId ? { ...o, status: newStatus, statusColor: newColor } : o)
-    );
+    this.api.updateOrderStatus(realId, newStatus).subscribe(data => {
+       this.orders.update(orders => 
+         orders.map(o => ((o as any)._id === realId || o.id === realId) ? data : o)
+       );
+    });
   }
 }

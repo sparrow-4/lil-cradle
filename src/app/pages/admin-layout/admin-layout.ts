@@ -13,7 +13,7 @@ export class AdminLayout {
   sidebarOpen = false;
 
   toggleSidebar() { this.sidebarOpen = !this.sidebarOpen; }
-  constructor(private auth: AdminAuthService, private router: Router) {}
+  constructor(public auth: AdminAuthService, private router: Router) {}
 
   logout() {
     this.auth.logout();

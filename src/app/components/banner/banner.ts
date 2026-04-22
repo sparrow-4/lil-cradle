@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SITE_CONTENT } from '../../data/site-content';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-banner',
@@ -10,12 +10,19 @@ import { SITE_CONTENT } from '../../data/site-content';
   styleUrl: './banner.css',
 })
 export class Banner implements OnInit, OnDestroy {
-  banners = SITE_CONTENT.heroBanners;
+  banners: any[] = [];
   activeIndex = 0;
   private intervalId: any;
 
+  constructor(private api: ApiService) {}
+
   ngOnInit() {
-    this.startTimer();
+    this.api.getSiteContent().subscribe(data => {
+      if(data && data.heroBanners && data.heroBanners.length > 0) {
+        this.banners = data.heroBanners;
+        this.startTimer();
+      }
+    });
   }
 
   ngOnDestroy() {

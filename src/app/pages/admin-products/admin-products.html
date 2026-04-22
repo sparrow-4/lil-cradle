@@ -1,7 +1,14 @@
 <div class="space-y-6">
   <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
     <h2 class="text-xl lg:text-2xl font-bold text-gray-800">Product Matrix</h2>
-    <span class="text-xs lg:text-sm text-gray-500 font-medium">Changes sync instantly with storefront</span>
+    <div class="flex gap-2">
+      <button (click)="addProduct()" class="px-4 py-2 bg-green-500 text-white text-sm font-bold rounded-lg hover:bg-green-600 transition">
+        + Add Product
+      </button>
+      <button (click)="saveAll()" class="px-4 py-2 bg-[#0F83B2] text-white text-sm font-bold rounded-lg hover:opacity-90 transition">
+        Save All Changes
+      </button>
+    </div>
   </div>
 
   <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -19,8 +26,12 @@
       <div class="divide-y divide-gray-100 min-w-[640px]">
         <div *ngFor="let product of products"
              class="grid grid-cols-12 gap-3 p-4 items-center hover:bg-slate-50 transition">
-          <div class="col-span-1">
-            <img [src]="product.image" class="w-10 h-10 object-cover rounded-md border border-gray-200">
+          <div class="col-span-1 relative group cursor-pointer border border-gray-200 rounded-md overflow-hidden">
+            <input type="file" (change)="uploadImage($event, product)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" title="Click to replace image">
+            <img [src]="product.image" class="w-10 h-10 object-cover w-full scale-110 group-hover:blur-sm transition">
+            <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/30 pointer-events-none">
+              <span class="text-white text-[10px] font-bold">Replace</span>
+            </div>
           </div>
           <div class="col-span-4 pr-2">
             <input type="text" [(ngModel)]="product.name"
@@ -36,16 +47,20 @@
             <input type="number" [(ngModel)]="product.oldPrice" placeholder="None"
               class="w-full pl-5 pr-2 py-1 text-sm text-gray-500 border border-transparent hover:border-gray-300 focus:border-gray-400 rounded bg-transparent focus:bg-white transition outline-none">
           </div>
-          <div class="col-span-2 flex items-center">
+          <div class="col-span-2 flex items-center justify-between">
             <label class="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" [(ngModel)]="product.sale" class="sr-only peer">
               <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-500"></div>
-              <span class="ml-2 text-xs font-bold" [class.text-red-500]="product.sale" [class.text-gray-500]="!product.sale">
-                {{ product.sale ? 'SALE' : 'Normal' }}
-              </span>
             </label>
+            <button (click)="deleteProduct(product._id)" class="text-red-500 text-xs font-bold hover:underline">Delete</button>
           </div>
-          <div class="col-span-1 text-center text-xs font-bold uppercase text-gray-400">{{ product.type }}</div>
+          <div class="col-span-1 text-center text-xs font-bold uppercase text-gray-400">
+             <select [(ngModel)]="product.type" class="bg-transparent border-b border-gray-300 px-1 py-1 text-xs">
+                <option value="featured">Featured</option>
+                <option value="best">Best Seller</option>
+                <option value="new">New Arrival</option>
+             </select>
+          </div>
         </div>
       </div>
     </div>
@@ -87,10 +102,10 @@
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" [(ngModel)]="product.sale" class="sr-only peer">
             <div class="w-10 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-500"></div>
-            <span class="ml-3 text-xs font-bold" [class.text-red-500]="product.sale" [class.text-gray-500]="!product.sale">
-              {{ product.sale ? 'ON SALE' : 'Normal' }}
-            </span>
           </label>
+        </div>
+        <div class="flex items-center justify-end mt-2">
+           <button (click)="deleteProduct(product._id)" class="text-red-500 text-xs font-bold hover:underline shrink-0">Delete Product</button>
         </div>
       </div>
     </div>

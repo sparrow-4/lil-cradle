@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PRODUCTS } from '../../data/product';
 import { CartService } from '../../services/cart';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-shop',
@@ -10,17 +10,23 @@ import { CartService } from '../../services/cart';
   styleUrl: './shop.css',
 })
 export class Shop implements OnInit {
-  products = PRODUCTS;
+  products: any[] = [];
   activeCategory = 'all';
   isLoading = true;
 
-  constructor(private cart: CartService) {}
+  constructor(private cart: CartService, private api: ApiService) {}
 
   ngOnInit() {
-    // Artificial 800ms aesthetic shimmer delay
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 800);
+    this.api.getProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+        setTimeout(() => this.isLoading = false, 800); // Shimmer effect
+      },
+      error: (err) => {
+        console.error('Failed to load products', err);
+        this.isLoading = false;
+      }
+    });
   }
 
   addToCart(p: any) {

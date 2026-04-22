@@ -36,6 +36,27 @@
         </span>
       </div>
 
+      <!-- Profile -->
+      <div class="flex items-center gap-3">
+        @if (auth.isLoggedUser()) {
+          <a routerLink="/profile" class="flex items-center gap-2 group">
+            <div class="w-8 h-8 rounded-full bg-[#C5A059] flex items-center justify-center text-white text-xs font-serif group-hover:scale-105 transition-transform">
+              {{ (auth.currentUser()?.name || 'U')[0].toUpperCase() }}
+            </div>
+          </a>
+        } @else if (auth.isAdmin()) {
+          <a routerLink="/admin/dashboard" class="flex items-center gap-2 group">
+            <div class="w-8 h-8 rounded-full bg-[#3D2B1F] flex items-center justify-center text-white text-xs font-serif group-hover:scale-105 transition-transform">
+              A
+            </div>
+          </a>
+        } @else {
+          <a routerLink="/login" class="text-gray-700 hover:text-[#C5A059] transition">
+            <lucide-icon [img]="icons.user" class="w-5 h-5"></lucide-icon>
+          </a>
+        }
+      </div>
+
       <!-- MOBILE MENU BUTTON -->
       <app-mobile-menubar/>
 

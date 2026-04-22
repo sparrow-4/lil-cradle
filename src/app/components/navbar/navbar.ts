@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule, ShoppingCart, Search, Menu } from 'lucide-angular';
+import { LucideAngularModule, ShoppingCart, Search, Menu, User } from 'lucide-angular';
 import { MobileMenubar } from "../mobile-menubar/mobile-menubar";
 import { CartService } from "../../services/cart";
+import { AdminAuthService } from "../../services/admin-auth";
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +16,7 @@ export class Navbar {
 
   isMenuOpen = false;
 
-  constructor(public cart: CartService) {}
+  constructor(public cart: CartService, public auth: AdminAuthService) {}
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -24,6 +25,7 @@ export class Navbar {
   icons = {
     cart: ShoppingCart,
     search: Search,
-    menu: Menu
+    menu: Menu,
+    user: User
   };
 }

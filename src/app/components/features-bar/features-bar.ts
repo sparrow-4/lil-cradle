@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SITE_CONTENT } from '../../data/site-content';
+import { ApiService } from '../../services/api.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -10,7 +10,13 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrl: './features-bar.css',
 })
 export class FeaturesBar {
-  features = SITE_CONTENT.features;
+  features: any[] = [];
 
-  constructor(public sanitizer: DomSanitizer) {}
+  constructor(public sanitizer: DomSanitizer, private api: ApiService) {
+    this.api.getSiteContent().subscribe(data => {
+      if (data && data.features) {
+        this.features = data.features;
+      }
+    });
+  }
 }

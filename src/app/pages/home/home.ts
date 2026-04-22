@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
-import { PRODUCTS } from '../../data/product';
 import { Banner } from "../../components/banner/banner";
 import { Category } from "../category/category";
 import { ProductCardComponent } from "../../components/product-card/product-card";

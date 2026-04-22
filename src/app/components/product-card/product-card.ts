@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PRODUCTS } from '../../data/product';
+import { ApiService } from '../../services/api.service';
 import { CartService } from '../../services/cart';
 
 
@@ -13,10 +13,12 @@ import { CartService } from '../../services/cart';
 })
 export class ProductCardComponent {
 
-  products = PRODUCTS;
+  products: any[] = [];
   activeTab = 'featured';
 
-  constructor(private cart: CartService) {}
+  constructor(private cart: CartService, private api: ApiService) {
+    this.api.getProducts().subscribe(data => this.products = data);
+  }
 
   get filteredProducts() {
     return this.products.filter(p => p.type === this.activeTab);

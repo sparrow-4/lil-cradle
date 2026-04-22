@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { SITE_CONTENT } from '../../data/site-content';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-custom-cta',
@@ -11,5 +11,13 @@ import { SITE_CONTENT } from '../../data/site-content';
   styleUrl: './custom-cta.css',
 })
 export class CustomCta {
-  whatsapp = SITE_CONTENT.companyInfo.whatsapp;
+  whatsapp = '';
+  
+  constructor(private api: ApiService) {
+    this.api.getSiteContent().subscribe(data => {
+      if(data && data.companyInfo) {
+        this.whatsapp = data.companyInfo.whatsapp;
+      }
+    });
+  }
 }

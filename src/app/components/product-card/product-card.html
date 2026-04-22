@@ -36,7 +36,7 @@
     <!-- PRODUCT GRID -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
 
-      <div *ngFor="let p of products" class="bg-white rounded-xl p-4 shadow-sm group cursor-pointer" [routerLink]="['/product', p.name]">
+      <div *ngFor="let p of filteredProducts | slice:0:8" class="bg-white rounded-xl p-4 shadow-sm group cursor-pointer" [routerLink]="['/product', p.name]">
 
         <!-- IMAGE -->
         <div class="relative">
