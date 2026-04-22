@@ -11,7 +11,7 @@ export interface Order {
   date: string;
   items: any[];
   total: number;
-  status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+  status: 'Pending' | 'Processing' | 'Shipped' | 'Out for Delivery' | 'Delivered' | 'Cancelled';
   statusColor: string;
 }
 

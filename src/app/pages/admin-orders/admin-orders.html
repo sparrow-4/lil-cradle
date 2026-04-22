@@ -38,16 +38,16 @@
           </div>
           <div class="col-span-1 font-bold text-gray-900 text-sm">₹{{ order.total | number:'1.2-2' }}</div>
           <div class="col-span-1 flex justify-end">
-            <button (click)="cycleStatus($any(order)._id || order.id, order.status)"
-              class="px-3 py-1.5 text-xs font-bold uppercase tracking-wide rounded hover:opacity-80 transition cursor-pointer"
+            <select [ngModel]="order.status" (ngModelChange)="updateStatus($any(order)._id || order.id, $event)"
+              class="px-2 py-1.5 text-xs font-bold uppercase tracking-wide rounded border-none outline-none focus:ring-0 cursor-pointer transition-all"
               [ngClass]="{
                 'bg-yellow-100 text-yellow-800': order.statusColor === 'yellow',
                 'bg-green-100 text-green-800':  order.statusColor === 'green',
                 'bg-blue-100 text-blue-800':    order.statusColor === 'blue',
                 'bg-red-100 text-red-800':      order.statusColor === 'red'
               }">
-              {{ order.status }} ↻
-            </button>
+              <option *ngFor="let s of statuses" [value]="s" class="bg-white text-gray-800">{{ s }}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -62,16 +62,16 @@
             <p class="font-bold text-gray-800 text-sm">{{ $any(order).orderId || order.id }}</p>
             <p class="text-xs text-gray-400">{{ order.date }}</p>
           </div>
-          <button (click)="cycleStatus($any(order)._id || order.id, order.status)"
-            class="px-3 py-1.5 text-xs font-bold uppercase tracking-wide rounded-full hover:opacity-80 transition"
+          <select [ngModel]="order.status" (ngModelChange)="updateStatus($any(order)._id || order.id, $event)"
+            class="px-3 py-1.5 text-xs font-bold uppercase tracking-wide rounded-full outline-none focus:ring-0 border-none transition-all"
             [ngClass]="{
               'bg-yellow-100 text-yellow-800': order.statusColor === 'yellow',
               'bg-green-100 text-green-800':  order.statusColor === 'green',
               'bg-blue-100 text-blue-800':    order.statusColor === 'blue',
               'bg-red-100 text-red-800':      order.statusColor === 'red'
             }">
-            {{ order.status }} ↻
-          </button>
+            <option *ngFor="let s of statuses" [value]="s" class="bg-white text-gray-800">{{ s }}</option>
+          </select>
         </div>
         <!-- Customer info -->
         <div class="bg-gray-50 rounded-lg p-3 text-sm space-y-1">

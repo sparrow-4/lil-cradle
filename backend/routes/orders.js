@@ -37,6 +37,7 @@ router.put('/:id/status', async (req, res) => {
     let statusColor = 'yellow';
     if (status === 'Processing') statusColor = 'yellow';
     if (status === 'Shipped') statusColor = 'green';
+    if (status === 'Out for Delivery') statusColor = 'blue';
     if (status === 'Delivered') statusColor = 'blue';
     if (status === 'Cancelled') statusColor = 'red';
 

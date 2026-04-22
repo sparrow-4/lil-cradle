@@ -1,19 +1,20 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../services/order';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-orders',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './admin-orders.html',
   styleUrl: './admin-orders.css',
 })
 export class AdminOrders {
   constructor(public orderService: OrderService) {}
 
-  cycleStatus(orderId: string, currentStatus: string) {
-    const sequence = ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'] as const;
-    let nextIndex = (sequence.indexOf(currentStatus as any) + 1) % sequence.length;
-    this.orderService.updateOrderStatus(orderId, sequence[nextIndex]);
+  statuses = ['Pending', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'] as const;
+
+  updateStatus(orderId: string, newStatus: any) {
+    this.orderService.updateOrderStatus(orderId, newStatus);
   }
 }
