@@ -10,6 +10,9 @@ import { AdminAuthService } from '../../services/admin-auth';
   styleUrl: './admin-layout.css',
 })
 export class AdminLayout {
+  sidebarOpen = false;
+
+  toggleSidebar() { this.sidebarOpen = !this.sidebarOpen; }
   constructor(private auth: AdminAuthService, private router: Router) {}
 
   logout() {

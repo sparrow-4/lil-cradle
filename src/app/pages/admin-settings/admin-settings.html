@@ -1,11 +1,11 @@
 <div class="space-y-6 max-w-4xl">
 
-  <div class="flex items-center justify-between mb-8">
-    <h2 class="text-2xl font-bold text-gray-800">Site Settings</h2>
-    <span class="text-sm text-gray-500 font-medium">Manage public content dynamically</span>
+  <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+    <h2 class="text-xl lg:text-2xl font-bold text-gray-800">Site Settings</h2>
+    <span class="text-xs lg:text-sm text-gray-500 font-medium">Manage public content dynamically</span>
   </div>
 
-  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 sm:p-8">
     
     <form (ngSubmit)="saveChanges()" class="space-y-8">
 
@@ -61,7 +61,7 @@
 
       <!-- Submit -->
       <div class="pt-4 flex justify-end">
-         <button type="submit" class="px-8 py-3 bg-[#0F83B2] text-white font-bold rounded-full hover:bg-opacity-90 transition shadow-sm">
+         <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-[#0F83B2] text-white font-bold rounded-full hover:bg-opacity-90 transition shadow-sm">
            Apply Changes to Live Site
          </button>
       </div>
