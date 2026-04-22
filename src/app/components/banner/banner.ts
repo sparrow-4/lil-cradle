@@ -13,6 +13,8 @@ export class Banner implements OnInit, OnDestroy {
   banners: any[] = [];
   activeIndex = 0;
   private intervalId: any;
+  private touchStartX = 0;
+  private touchEndX = 0;
 
   constructor(public api: ApiService) {}
 
@@ -30,6 +32,7 @@ export class Banner implements OnInit, OnDestroy {
   }
 
   startTimer() {
+    this.stopTimer();
     this.intervalId = setInterval(() => {
       this.next();
     }, 5000);
@@ -43,9 +46,33 @@ export class Banner implements OnInit, OnDestroy {
     this.activeIndex = (this.activeIndex + 1) % this.banners.length;
   }
 
+  prev() {
+    this.activeIndex = (this.activeIndex - 1 + this.banners.length) % this.banners.length;
+  }
+
   setBanner(index: number) {
     this.activeIndex = index;
-    this.stopTimer();
-    this.startTimer(); // reset timer
+    this.startTimer();
+  }
+
+  // Swipe handlers
+  onTouchStart(e: TouchEvent) {
+    this.touchStartX = e.changedTouches[0].screenX;
+  }
+
+  onTouchEnd(e: TouchEvent) {
+    this.touchEndX = e.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  private handleSwipe() {
+    const threshold = 50;
+    if (this.touchStartX - this.touchEndX > threshold) {
+      this.next(); // Swiped left
+      this.startTimer();
+    } else if (this.touchEndX - this.touchStartX > threshold) {
+      this.prev(); // Swiped right
+      this.startTimer();
+    }
   }
 }

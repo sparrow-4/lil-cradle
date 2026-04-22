@@ -1,4 +1,6 @@
-<section class="w-full relative bg-gray-50 flex justify-center py-6 overflow-hidden min-h-[400px] md:min-h-[500px]">
+<section class="w-full relative bg-gray-50 flex justify-center py-6 overflow-hidden min-h-[400px] md:min-h-[500px]"
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)">
   
   <ng-container *ngFor="let banner of banners; let i = index">
     <div 
@@ -10,13 +12,10 @@
       [class.-z-10]="i !== activeIndex"
       style="height: calc(100% - 3rem);"
     >
-
       <!-- LEFT CONTENT -->
       <div class="w-full md:w-1/2 text-white py-10 md:py-16 z-20 pl-6">
         <p class="text-xs md:text-sm tracking-widest uppercase mb-3 text-white/90 font-medium">{{ banner.tagline }}</p>
-
         <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-8" [innerHTML]="banner.headline"></h1>
-
         <a [routerLink]="banner.buttonLink" class="inline-block bg-white text-gray-800 font-bold px-8 py-3.5 rounded-full hover:bg-opacity-90 transition shadow-lg">
           {{ banner.buttonText }}
         </a>
@@ -34,9 +33,16 @@
           <path d="M0,60 L0,30 Q30,0 60,30 T120,30 T180,30 T240,30 T300,30 T360,30 T420,30 T480,30 T540,30 T600,30 T660,30 T720,30 T780,30 T840,30 T900,30 T960,30 T1020,30 T1080,30 T1140,30 T1200,30 L1200,60 Z" fill="#f9fafb" />
         </svg>
       </div>
-
     </div>
   </ng-container>
+
+  <!-- Navigation Arrows -->
+  <button (click)="prev(); startTimer()" class="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30 flex items-center justify-center z-40 hover:bg-white/40 transition">
+    <span class="material-icons">chevron_left</span>
+  </button>
+  <button (click)="next(); startTimer()" class="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30 flex items-center justify-center z-40 hover:bg-white/40 transition">
+    <span class="material-icons">chevron_right</span>
+  </button>
 
   <!-- Navigation Dots -->
   <div class="absolute bottom-10 left-0 w-full flex justify-center gap-3 z-30">
