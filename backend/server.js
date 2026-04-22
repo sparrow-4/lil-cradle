@@ -5,6 +5,10 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 
+const helmet = require('helmet');
+const compression = require('compression');
+const rateLimit = require('express-rate-limit');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -12,16 +16,30 @@ const PORT = process.env.PORT || 3000;
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
-// Middleware
+// Security & Performance Middleware
+app.use(helmet({
+  crossOriginResourcePolicy: false, // Allow images to be loaded cross-origin
+}));
+app.use(compression());
+app.use(express.json({ limit: '5mb' }));
+
+// Rate Limiting: Max 100 requests per 15 minutes per IP
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 200,
+  message: 'Too many requests from this IP, please try again later.'
+});
+app.use('/api/', limiter);
+
 app.use(cors({ 
   origin: [
     'http://localhost:4200', 
     'http://localhost:4300', 
-    /\.vercel\.app$/ // Allow all Vercel deployments
+    /\.vercel\.app$/,
+    'https://lil-cradle.vercel.app'
   ],
   credentials: true 
 }));
-app.use(express.json({ limit: '10mb' }));
 
 // Serve uploaded images as static files
 app.use('/uploads', express.static(uploadsDir));

@@ -35,7 +35,7 @@ export class Shop implements OnInit {
     this.api.getProducts().subscribe({
       next: (data) => {
         this.allProducts.set(data);
-        setTimeout(() => this.isLoading = false, 800);
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Failed to load products', err);

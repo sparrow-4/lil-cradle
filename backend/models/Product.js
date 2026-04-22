@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-  name:     { type: String, required: true },
+  name:     { type: String, required: true, index: true },
   price:    { type: Number, required: true },
   costPrice: { type: Number, default: 0 },
   oldPrice: { type: Number, default: null },
@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
   rating:   { type: Number, default: 5 },
   sale:     { type: Boolean, default: false },
   type:     { type: String, enum: ['featured', 'best', 'new'], default: 'featured' },
-  category: { type: String, default: 'Uncategorized' }
+  category: { type: String, default: 'Uncategorized', index: true }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

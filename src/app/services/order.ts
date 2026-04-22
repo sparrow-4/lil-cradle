@@ -1,4 +1,5 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 
 export interface Order {
@@ -96,7 +97,7 @@ export class OrderService {
     }));
   });
 
-  addOrder(customerData: any, cartItems: any[], totalCost: number) {
+  addOrder(customerData: any, cartItems: any[], totalCost: number): Observable<Order> {
     const newOrder = {
       customerName: customerData.firstName + ' ' + (customerData.lastName || ''),
       customerPhone: customerData.phone,
@@ -105,21 +106,28 @@ export class OrderService {
       total: totalCost
     };
 
-    this.api.createOrder(newOrder).subscribe(data => {
+    const obs = this.api.createOrder(newOrder);
+    obs.subscribe(data => {
       this.orders.update(current => [data, ...current]);
     });
+    return obs;
   }
 
   updateOrderStatus(orderId: string, newStatus: Order['status']) {
-    // Only _id is the real mongo id
     const order = this.orders().find(o => o.id === orderId || (o as any)._id === orderId);
     if(!order) return;
     const realId = (order as any)._id || orderId;
 
-    this.api.updateOrderStatus(realId, newStatus).subscribe(data => {
-       this.orders.update(orders => 
-         orders.map(o => ((o as any)._id === realId || o.id === realId) ? data : o)
-       );
+    this.api.updateOrderStatus(realId, newStatus).subscribe({
+      next: (data) => {
+        this.orders.update(orders => 
+          orders.map(o => ((o as any)._id === realId || o.id === realId) ? data : o)
+        );
+      },
+      error: (err) => {
+        alert('Failed to update status. Please try again.');
+        console.error(err);
+      }
     });
   }
 }

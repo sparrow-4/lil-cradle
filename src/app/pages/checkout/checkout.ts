@@ -23,10 +23,10 @@ export class Checkout implements OnInit {
   constructor(public cart: CartService, private orderService: OrderService, private router: Router) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 700);
+    this.isLoading = false;
   }
+
+  isProcessing = false;
 
   placeOrder() {
     if(!this.customer.name || !this.customer.phone || !this.customer.address) {
@@ -38,6 +38,8 @@ export class Checkout implements OnInit {
       alert("Your cart is empty!");
       return;
     }
+
+    this.isProcessing = true;
 
     const number = "917902805012"; 
     const total = this.cart.total();
@@ -55,19 +57,26 @@ export class Checkout implements OnInit {
 
     message += `\n*TOTAL: ₹${total}*`;
 
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${number}?text=${encodedMessage}`, '_blank');
-
-    // Save to Admin system
+    // Save to Admin system first
     this.orderService.addOrder({
       firstName: this.customer.name,
       phone: this.customer.phone,
       address: this.customer.address,
       city: this.customer.city
-    }, this.cart.items(), total);
-
-    // Clear cart and redirect
-    this.cart.items.set([]);
-    this.router.navigate(['/']);
+    }, this.cart.items(), total).subscribe({
+      next: () => {
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/${number}?text=${encodedMessage}`, '_blank');
+        
+        // Clear cart and redirect
+        this.cart.items.set([]);
+        this.isProcessing = false;
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        alert("Something went wrong while placing your order. Please try again.");
+        this.isProcessing = false;
+      }
+    });
   }
 }

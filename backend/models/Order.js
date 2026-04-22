@@ -8,14 +8,14 @@ const orderItemSchema = new mongoose.Schema({
 }, { _id: false });
 
 const orderSchema = new mongoose.Schema({
-  orderId:         { type: String, unique: true },
+  orderId:         { type: String, unique: true, index: true },
   customerName:    String,
   customerPhone:   String,
   customerAddress: String,
   date:            { type: String },
   items:           [orderItemSchema],
   total:           Number,
-  status:          { type: String, enum: ['Pending', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'], default: 'Pending' },
+  status:          { type: String, enum: ['Pending', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'], default: 'Pending', index: true },
   statusColor:     { type: String, default: 'yellow' }
 }, { timestamps: true });
 

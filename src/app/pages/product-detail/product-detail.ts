@@ -16,7 +16,7 @@ export class ProductDetail implements OnInit {
 
   isLoading = true;
 
-  constructor(private route: ActivatedRoute, private cart: CartService, private api: ApiService) {}
+  constructor(private route: ActivatedRoute, private cart: CartService, public api: ApiService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -26,7 +26,7 @@ export class ProductDetail implements OnInit {
       this.api.getProducts().subscribe({
         next: (data) => {
           this.product = data.find((p: any) => p.name === name) || data[0];
-          setTimeout(() => this.isLoading = false, 700);
+          this.isLoading = false;
         },
         error: (err) => {
           console.error('Failed to load product', err);
