@@ -9,6 +9,20 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
+  getImageUrl(path: string): string {
+    if (!path) return '/images/p1.jpg';
+    if (path.startsWith('http')) return path;
+    if (path.startsWith('/')) {
+      // If production and path is relative, prepend the API base (without /api suffix)
+      if (environment.production) {
+        const base = environment.apiUrl.replace('/api', '');
+        return `${base}${path}`;
+      }
+      return path;
+    }
+    return path;
+  }
+
   // ── PRODUCTS ──
   getProducts(): Observable<any[]> {
     return this.http.get<any[]>(`${this.api}/products`);

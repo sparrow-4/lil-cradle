@@ -19,7 +19,7 @@
         <!-- Circle -->
         <div class="w-[100px] h-[100px] md:w-[130px] md:h-[130px] rounded-full flex items-center justify-center p-3 transition duration-300 relative group-hover:scale-105"
              style="background: linear-gradient(180deg, #EAF6FB 0%, rgba(234, 246, 251, 0) 100%);">
-          <img [src]="cat.image" [alt]="cat.name" class="w-[85%] h-[85%] object-contain scale-x-[-1]">
+          <img [src]="api.getImageUrl(cat.image)" [alt]="cat.name" class="w-[85%] h-[85%] object-contain scale-x-[-1]">
         </div>
         <!-- Title -->
         <h4 class="text-gray-700 font-bold group-hover:text-[#0F83B2] transition">{{ cat.name }}</h4>

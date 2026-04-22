@@ -16,7 +16,7 @@ export class ProductCardComponent {
   products: any[] = [];
   activeTab = 'featured';
 
-  constructor(private cart: CartService, private api: ApiService) {
+  constructor(private cart: CartService, public api: ApiService) {
     this.api.getProducts().subscribe(data => this.products = data);
   }
 

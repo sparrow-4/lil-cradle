@@ -14,7 +14,7 @@ export class CustomCta {
   whatsapp = '';
   promo: any = null;
   
-  constructor(private api: ApiService) {
+  constructor(public api: ApiService) {
     this.api.getSiteContent().subscribe(data => {
       if(data) {
         if(data.companyInfo) this.whatsapp = data.companyInfo.whatsapp;

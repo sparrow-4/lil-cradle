@@ -12,7 +12,7 @@ import { ApiService } from '../../services/api.service';
 export class AdminProducts {
   products: any[] = [];
 
-  constructor(private api: ApiService) {
+  constructor(public api: ApiService) {
     this.api.getProducts().subscribe(data => this.products = data);
   }
 

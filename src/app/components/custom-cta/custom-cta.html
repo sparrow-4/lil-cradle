@@ -37,7 +37,7 @@
 
     <!-- Image Display -->
     <div class="flex-1 h-[400px] md:h-[600px] w-full relative">
-      <img [src]="promo?.image || '/artifacts/bespoke_baby_hamper_aesthetic_1776832547628.png'" alt="Custom Baby Hamper"
+      <img [src]="api.getImageUrl(promo?.image || '')" alt="Custom Baby Hamper"
         class="w-full h-full object-cover">
       <!-- Aesthetic Floating Badge -->
       <div

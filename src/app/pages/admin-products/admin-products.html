@@ -17,49 +17,62 @@
     <div class="hidden md:block overflow-x-auto">
       <div class="grid grid-cols-12 gap-3 p-4 border-b border-gray-200 bg-gray-50 text-xs font-bold text-gray-500 uppercase tracking-wide min-w-[640px]">
         <div class="col-span-1">Img</div>
-        <div class="col-span-4">Product Name</div>
-        <div class="col-span-2">Price (₹)</div>
-        <div class="col-span-2">Old Price (₹)</div>
-        <div class="col-span-2">Sale</div>
+        <div class="col-span-3">Product Name</div>
+        <div class="col-span-2">Category</div>
         <div class="col-span-1 text-center">Type</div>
+        <div class="col-span-1">Price (₹)</div>
+        <div class="col-span-1">Old Price</div>
+        <div class="col-span-1 text-center">Sale</div>
+        <div class="col-span-2 text-right pr-4">Actions</div>
       </div>
       <div class="divide-y divide-gray-100 min-w-[640px]">
         <div *ngFor="let product of products"
              class="grid grid-cols-12 gap-3 p-4 items-center hover:bg-slate-50 transition">
           <div class="col-span-1 relative group cursor-pointer border border-gray-200 rounded-md overflow-hidden">
             <input type="file" (change)="uploadImage($event, product)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" title="Click to replace image">
-            <img [src]="product.image" class="w-10 h-10 object-cover w-full scale-110 group-hover:blur-sm transition">
+            <img [src]="api.getImageUrl(product.image)" class="w-10 h-10 object-cover w-full scale-110 group-hover:blur-sm transition">
             <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/30 pointer-events-none">
               <span class="text-white text-[10px] font-bold">Replace</span>
             </div>
           </div>
-          <div class="col-span-4 pr-2">
+          <div class="col-span-3 pr-2">
             <input type="text" [(ngModel)]="product.name"
               class="w-full px-2 py-1 text-sm font-bold text-gray-800 border border-transparent hover:border-gray-300 focus:border-[#0F83B2] rounded bg-transparent focus:bg-white transition outline-none">
           </div>
-          <div class="col-span-2 pr-2 relative">
-            <span class="absolute left-2 top-1.5 text-gray-400 font-bold text-sm">₹</span>
-            <input type="number" [(ngModel)]="product.price"
-              class="w-full pl-5 pr-2 py-1 text-sm font-bold text-gray-900 border border-transparent hover:border-gray-300 focus:border-green-500 rounded bg-transparent focus:bg-white transition outline-none">
+          <div class="col-span-2 pr-2">
+            <select [(ngModel)]="product.category" class="w-full bg-transparent border-b border-gray-200 py-1 text-xs outline-none">
+               <option value="Cradles">Cradles</option>
+               <option value="Hampers">Hampers</option>
+               <option value="Clothing">Clothing</option>
+               <option value="Accessories">Accessories</option>
+               <option value="Other">Other</option>
+            </select>
           </div>
-          <div class="col-span-2 pr-2 relative">
-            <span class="absolute left-2 top-1.5 text-gray-400 font-medium text-sm">₹</span>
-            <input type="number" [(ngModel)]="product.oldPrice" placeholder="None"
-              class="w-full pl-5 pr-2 py-1 text-sm text-gray-500 border border-transparent hover:border-gray-300 focus:border-gray-400 rounded bg-transparent focus:bg-white transition outline-none">
-          </div>
-          <div class="col-span-2 flex items-center justify-between">
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" [(ngModel)]="product.sale" class="sr-only peer">
-              <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-500"></div>
-            </label>
-            <button (click)="deleteProduct(product._id)" class="text-red-500 text-xs font-bold hover:underline">Delete</button>
-          </div>
-          <div class="col-span-1 text-center text-xs font-bold uppercase text-gray-400">
-             <select [(ngModel)]="product.type" class="bg-transparent border-b border-gray-300 px-1 py-1 text-xs">
+          <div class="col-span-1 text-center">
+             <select [(ngModel)]="product.type" class="bg-transparent border-b border-gray-200 px-1 py-1 text-[10px] font-bold uppercase text-gray-400 outline-none">
                 <option value="featured">Featured</option>
                 <option value="best">Best Seller</option>
                 <option value="new">New Arrival</option>
              </select>
+          </div>
+          <div class="col-span-1 pr-2 relative">
+            <input type="number" [(ngModel)]="product.price"
+              class="w-full py-1 text-sm font-bold text-gray-900 border border-transparent hover:border-gray-300 focus:border-green-500 rounded bg-transparent focus:bg-white transition outline-none">
+          </div>
+          <div class="col-span-1 pr-2 relative">
+            <input type="number" [(ngModel)]="product.oldPrice" placeholder="None"
+              class="w-full py-1 text-sm text-gray-500 border border-transparent hover:border-gray-300 focus:border-gray-400 rounded bg-transparent focus:bg-white transition outline-none">
+          </div>
+          <div class="col-span-1 flex items-center justify-center">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" [(ngModel)]="product.sale" class="sr-only peer">
+              <div class="w-8 h-4 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-red-500"></div>
+            </label>
+          </div>
+          <div class="col-span-2 flex justify-end gap-2 pr-2">
+            <button (click)="deleteProduct(product._id)" class="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Delete Product">
+               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -70,42 +83,54 @@
       <div *ngFor="let product of products" class="p-4 space-y-3">
         <!-- Image + Name -->
         <div class="flex items-center gap-3">
-          <img [src]="product.image" class="w-14 h-14 object-cover rounded-lg border border-gray-200 shrink-0">
+          <div class="relative w-14 h-14 shrink-0">
+            <input type="file" (change)="uploadImage($event, product)" class="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer">
+            <img [src]="api.getImageUrl(product.image)" class="w-full h-full object-cover rounded-lg border border-gray-200">
+          </div>
           <div class="flex-1 min-w-0">
             <input type="text" [(ngModel)]="product.name"
               class="w-full px-2 py-1 text-sm font-bold text-gray-800 border border-gray-200 focus:border-[#0F83B2] rounded bg-white outline-none">
-            <p class="text-xs text-gray-400 mt-1 uppercase font-semibold">{{ product.type }}</p>
+            <div class="flex gap-2 mt-1">
+              <select [(ngModel)]="product.category" class="text-[10px] bg-gray-100 rounded px-1 py-0.5 border-none outline-none">
+                 <option value="Cradles">Cradles</option>
+                 <option value="Hampers">Hampers</option>
+                 <option value="Clothing">Clothing</option>
+                 <option value="Accessories">Accessories</option>
+                 <option value="Other">Other</option>
+              </select>
+              <select [(ngModel)]="product.type" class="text-[10px] bg-gray-100 rounded px-1 py-0.5 border-none outline-none font-bold uppercase">
+                 <option value="featured">Featured</option>
+                 <option value="best">Best Seller</option>
+                 <option value="new">New Arrival</option>
+              </select>
+            </div>
           </div>
         </div>
         <!-- Prices -->
         <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="text-xs text-gray-500 font-semibold block mb-1">Price (₹)</label>
-            <div class="relative">
-              <span class="absolute left-2 top-2 text-gray-400 font-bold text-sm">₹</span>
-              <input type="number" [(ngModel)]="product.price"
-                class="w-full pl-5 pr-2 py-1.5 text-sm font-bold text-gray-900 border border-gray-200 focus:border-green-500 rounded outline-none">
-            </div>
+          <div class="relative">
+            <span class="absolute left-2 top-2 text-gray-400 font-bold text-xs">₹</span>
+            <input type="number" [(ngModel)]="product.price"
+              class="w-full pl-5 pr-2 py-1.5 text-xs font-bold text-gray-900 border border-gray-200 focus:border-green-500 rounded outline-none">
           </div>
-          <div>
-            <label class="text-xs text-gray-500 font-semibold block mb-1">Old Price (₹)</label>
-            <div class="relative">
-              <span class="absolute left-2 top-2 text-gray-400 text-sm">₹</span>
-              <input type="number" [(ngModel)]="product.oldPrice" placeholder="None"
-                class="w-full pl-5 pr-2 py-1.5 text-sm text-gray-500 border border-gray-200 focus:border-gray-400 rounded outline-none">
-            </div>
+          <div class="relative">
+            <span class="absolute left-2 top-2 text-gray-400 text-xs">₹</span>
+            <input type="number" [(ngModel)]="product.oldPrice" placeholder="Old"
+              class="w-full pl-5 pr-2 py-1.5 text-xs text-gray-500 border border-gray-200 focus:border-gray-400 rounded outline-none">
           </div>
         </div>
-        <!-- Sale toggle -->
-        <div class="flex items-center justify-between">
-          <span class="text-xs text-gray-500 font-semibold">On Sale?</span>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" [(ngModel)]="product.sale" class="sr-only peer">
-            <div class="w-10 h-5 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-500"></div>
-          </label>
-        </div>
-        <div class="flex items-center justify-end mt-2">
-           <button (click)="deleteProduct(product._id)" class="text-red-500 text-xs font-bold hover:underline shrink-0">Delete Product</button>
+        <!-- Sale toggle + Delete -->
+        <div class="flex items-center justify-between bg-gray-50 p-2 rounded-lg">
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-gray-500 font-bold uppercase">Sale</span>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" [(ngModel)]="product.sale" class="sr-only peer">
+              <div class="w-8 h-4 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-red-500"></div>
+            </label>
+          </div>
+          <button (click)="deleteProduct(product._id)" class="text-red-400 p-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+          </button>
         </div>
       </div>
     </div>

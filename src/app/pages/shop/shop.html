@@ -4,26 +4,17 @@
   <!-- Mobile: horizontal scrollable chips | Desktop: vertical sidebar -->
   <div class="md:hidden mb-5">
     <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-      <button (click)="activeCategory='all'"
-        [class]="activeCategory==='all' ? 'bg-[#0F83B2] text-white' : 'bg-white text-gray-600 border border-gray-200'"
+      <a routerLink="/shop" [queryParams]="{ category: 'all' }"
+        [class]="activeCategory()==='all' ? 'bg-[#0F83B2] text-white' : 'bg-white text-gray-600 border border-gray-200'"
         class="px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap flex-shrink-0 transition shadow-sm">
         All Products
-      </button>
-      <button (click)="activeCategory='featured'"
-        [class]="activeCategory==='featured' ? 'bg-[#0F83B2] text-white' : 'bg-white text-gray-600 border border-gray-200'"
+      </a>
+      <a *ngFor="let cat of ['Cradles', 'Hampers', 'Clothing', 'Accessories']"
+        [routerLink]="['/shop']" [queryParams]="{ category: cat.toLowerCase() }"
+        [class]="activeCategory()===cat.toLowerCase() ? 'bg-[#0F83B2] text-white' : 'bg-white text-gray-600 border border-gray-200'"
         class="px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap flex-shrink-0 transition shadow-sm">
-        Featured
-      </button>
-      <button (click)="activeCategory='best'"
-        [class]="activeCategory==='best' ? 'bg-[#0F83B2] text-white' : 'bg-white text-gray-600 border border-gray-200'"
-        class="px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap flex-shrink-0 transition shadow-sm">
-        Best Sellers
-      </button>
-      <button (click)="activeCategory='new'"
-        [class]="activeCategory==='new' ? 'bg-[#0F83B2] text-white' : 'bg-white text-gray-600 border border-gray-200'"
-        class="px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap flex-shrink-0 transition shadow-sm">
-        New Arrivals
-      </button>
+        {{ cat }}
+      </a>
     </div>
   </div>
 
@@ -41,10 +32,10 @@
       </div>
 
       <ul *ngIf="!isLoading" class="space-y-3 text-gray-600">
-        <li><button (click)="activeCategory='all'"    [class.font-bold]="activeCategory==='all'"      class="hover:text-[#0F83B2]">All Products</button></li>
-        <li><button (click)="activeCategory='featured'" [class.font-bold]="activeCategory==='featured'" class="hover:text-[#0F83B2]">Featured</button></li>
-        <li><button (click)="activeCategory='best'"   [class.font-bold]="activeCategory==='best'"     class="hover:text-[#0F83B2]">Best Sellers</button></li>
-        <li><button (click)="activeCategory='new'"    [class.font-bold]="activeCategory==='new'"      class="hover:text-[#0F83B2]">New Arrivals</button></li>
+        <li><a routerLink="/shop" [queryParams]="{ category: 'all' }" [class.font-bold]="activeCategory()==='all'" class="hover:text-[#0F83B2]">All Products</a></li>
+        <li *ngFor="let cat of ['Cradles', 'Hampers', 'Clothing', 'Accessories']">
+          <a [routerLink]="['/shop']" [queryParams]="{ category: cat.toLowerCase() }" [class.font-bold]="activeCategory()===cat.toLowerCase()" class="hover:text-[#0F83B2]">{{ cat }}</a>
+        </li>
       </ul>
     </aside>
 
@@ -60,12 +51,11 @@
 
     <!-- ── PRODUCT GRID ── -->
     <div *ngIf="!isLoading" class="w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-
-      <div *ngFor="let p of products"
+      <div *ngFor="let p of filteredProducts()"
            class="bg-white rounded-xl p-3 sm:p-4 shadow-sm group border border-gray-100 relative flex flex-col">
         <!-- Image -->
         <div class="relative bg-[#f8f9fa] rounded-lg">
-          <img [src]="p.image" loading="lazy" class="w-full h-[140px] sm:h-[200px] object-contain">
+          <img [src]="api.getImageUrl(p.image)" loading="lazy" class="w-full h-[140px] sm:h-[200px] object-contain">
           <span *ngIf="p.sale" class="absolute top-2 left-2 bg-[#b89c84] text-white text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded shadow">SALE</span>
         </div>
 

@@ -11,6 +11,12 @@
 }
 
 @defer (on viewport) {
+  <app-product-card></app-product-card>
+} @placeholder {
+  <div class="h-[600px] w-full shimmer rounded-xl my-4"></div>
+}
+
+@defer (on viewport) {
   <app-custom-cta></app-custom-cta>
 } @placeholder {
   <div class="h-96 w-full shimmer rounded-[2.5rem] my-4"></div>
@@ -20,12 +26,6 @@
   <app-promo-banners></app-promo-banners>
 } @placeholder {
   <div class="h-96 w-full shimmer rounded-xl my-4"></div>
-}
-
-@defer (on viewport) {
-  <app-product-card></app-product-card>
-} @placeholder {
-  <div class="h-[600px] w-full shimmer rounded-xl my-4"></div>
 }
 
 @defer (on viewport) {

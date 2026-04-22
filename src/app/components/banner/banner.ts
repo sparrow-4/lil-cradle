@@ -14,7 +14,7 @@ export class Banner implements OnInit, OnDestroy {
   activeIndex = 0;
   private intervalId: any;
 
-  constructor(private api: ApiService) {}
+  constructor(public api: ApiService) {}
 
   ngOnInit() {
     this.api.getSiteContent().subscribe(data => {

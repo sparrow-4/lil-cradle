@@ -11,7 +11,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class Category {
   categories: any[] = [];
-  constructor(private api: ApiService) {
+  constructor(public api: ApiService) {
     this.api.getSiteContent().subscribe(data => {
       if(data && data.categories) {
          this.categories = data.categories;

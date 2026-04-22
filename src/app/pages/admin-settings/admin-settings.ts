@@ -15,7 +15,7 @@ export class AdminSettings {
   categories: any[] = [];
   promoBanners: any[] = [];
   
-  constructor(private api: ApiService) {
+  constructor(public api: ApiService) {
     this.api.getSiteContent().subscribe(data => {
       if(data) {
          if(data.companyInfo) this.info = data.companyInfo;
