@@ -27,7 +27,7 @@
       <div class="absolute right-0 bottom-0 w-1/2 h-full flex justify-end items-end p-4">
         <!-- Optional Decorative circle behind image -->
         <div class="absolute w-[180px] h-[180px] bg-white rounded-full opacity-40 bottom-2 right-2"></div>
-        <img [src]="promo.image" alt="Promo image" class="relative z-10 h-[90%] object-contain group-hover:scale-105 transition duration-500">
+        <img [src]="api.getImageUrl(promo.image)" alt="Promo image" class="relative z-10 h-[90%] object-contain group-hover:scale-105 transition duration-500">
       </div>
 
     </div>

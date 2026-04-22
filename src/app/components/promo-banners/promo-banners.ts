@@ -11,10 +11,32 @@ import { ApiService } from '../../services/api.service';
 })
 export class PromoBanners {
   promos: any[] = [];
-  constructor(private api: ApiService) {
+  constructor(public api: ApiService) {
     this.api.getSiteContent().subscribe(data => {
-      if(data && data.promoBanners) {
+      if(data && data.promoBanners && data.promoBanners.length > 0) {
         this.promos = data.promoBanners;
+      } else {
+        // Default data requested by user
+        this.promos = [
+          {
+            tag: 'New Arrivals',
+            headline: 'Traditional Cradle Kits',
+            buttonText: 'Shop Now',
+            image: '/images/p1.jpg',
+            bgColor: '#F3F9FB',
+            tagColor: '#0F83B2',
+            buttonBg: '#0F83B2'
+          },
+          {
+            tag: 'Customizable',
+            headline: 'Handmade Luxury Hampers',
+            buttonText: 'Customize Now',
+            image: '/images/p2.jpg',
+            bgColor: '#FDF7F2',
+            tagColor: '#C49A4A',
+            buttonBg: '#C49A4A'
+          }
+        ];
       }
     });
   }
