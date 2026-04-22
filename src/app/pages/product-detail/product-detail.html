@@ -50,17 +50,24 @@
       
       <!-- Price -->
       <div class="flex items-center gap-4 mb-8">
-        <span class="text-3xl font-bold text-[#0F83B2]">${{ product.price }}</span>
-        <span *ngIf="product.oldPrice" class="text-xl text-gray-400 line-through">${{ product.oldPrice }}</span>
+        <span class="text-3xl font-bold text-[#0F83B2]">₹{{ product.price }}</span>
+        <span *ngIf="product.oldPrice" class="text-xl text-gray-400 line-through">₹{{ product.oldPrice }}</span>
       </div>
 
       <!-- Description -->
       <div class="mb-8 content text-gray-600 leading-relaxed">
-        <p>This beautifully crafted toy brings joy and developmental benefits together. Made from premium, safe materials ensuring durability and endless hours of fun for your little ones. Specifically designed to aid in critical thinking and fine motor skills.</p>
-        <ul class="list-disc ml-5 mt-4 space-y-1 text-sm">
-          <li>100% Non-toxic materials</li>
-          <li>Ages 18 months +</li>
-          <li>Easy to clean surface</li>
+        <p>Expertly curated for your little joy, this premium collection blends comfort with aesthetic appeal. Each piece is hand-selected to ensure the highest quality for traditional ceremonies and everyday luxury.</p>
+        
+        <!-- Customization Note (Highlighted for Hampers/Kits) -->
+        <div class="mt-6 p-4 bg-[#F9F4EE] border-l-4 border-[#C49A4A] rounded-r-xl">
+           <p class="text-sm font-bold text-[#5C3D1E] mb-1 italic">Want it customized?</p>
+           <p class="text-xs text-[#8C6D4F]">This item is eligible for bespoke personalization. We can customize colors, names, and contents via WhatsApp consultation.</p>
+        </div>
+
+        <ul class="list-disc ml-5 mt-6 space-y-2 text-sm">
+          <li>Premium, skin-friendly materials</li>
+          <li>Handmade attention to detail</li>
+          <li>Gift-wrap & Personal note available</li>
         </ul>
       </div>
 

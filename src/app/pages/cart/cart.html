@@ -34,7 +34,7 @@
           
           <div class="flex-1 text-center sm:text-left">
             <h4 class="font-bold text-gray-800">{{ item.name }}</h4>
-            <p class="text-[#0F83B2] font-semibold">${{ item.price }}</p>
+            <p class="text-[#0F83B2] font-semibold">₹{{ item.price }}</p>
           </div>
 
           <div class="flex items-center gap-3 mt-4 sm:mt-0">
@@ -53,7 +53,7 @@
         <h3 class="text-xl font-bold mb-4 border-b pb-4">Order Summary</h3>
         <div class="flex justify-between mb-2 text-gray-600">
           <span>Subtotal</span>
-          <span>${{ cart.total() }}</span>
+          <span>₹{{ cart.total() }}</span>
         </div>
         <div class="flex justify-between mb-4 text-gray-600">
           <span>Shipping</span>
@@ -61,7 +61,7 @@
         </div>
         <div class="flex justify-between font-bold text-xl border-t pt-4 mb-6">
           <span>Total</span>
-          <span class="text-[#0F83B2]">${{ cart.total() }}</span>
+          <span class="text-[#0F83B2]">₹{{ cart.total() }}</span>
         </div>
         <a routerLink="/checkout" class="w-full bg-[#0F83B2] text-white py-3 rounded-full font-bold block text-center hover:bg-opacity-90 transition shadow-md">
           Proceed to Checkout

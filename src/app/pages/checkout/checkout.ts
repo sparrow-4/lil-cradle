@@ -50,10 +50,10 @@ export class Checkout implements OnInit {
 
     message += `*Order Items:*\n`;
     this.cart.items().forEach(item => {
-      message += `- ${item.qty}x ${item.name} ($${item.price})\n`;
+      message += `- ${item.qty}x ${item.name} (₹${item.price})\n`;
     });
 
-    message += `\n*TOTAL: $${total}*`;
+    message += `\n*TOTAL: ₹${total}*`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${number}?text=${encodedMessage}`, '_blank');

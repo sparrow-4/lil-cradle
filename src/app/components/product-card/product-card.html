@@ -56,14 +56,9 @@
         </h3>
 
         <!-- PRICE -->
-        <div class="flex items-center gap-2 mt-1">
-          <span class="text-green-600 font-semibold">
-            ${{ p.price }}
-          </span>
-
-          <span *ngIf="p.oldPrice" class="text-gray-400 line-through text-sm">
-            ${{ p.oldPrice }}
-          </span>
+        <div class="flex items-center gap-1.5 min-h-[24px]">
+          <span class="text-[#0F83B2] font-bold text-sm sm:text-base">₹{{ p.price }}</span>
+          <span *ngIf="p.oldPrice" class="text-gray-300 line-through text-[10px] sm:text-xs">₹{{ p.oldPrice }}</span>
         </div>
 
         <!-- RATING -->

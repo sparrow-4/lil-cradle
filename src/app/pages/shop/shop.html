@@ -71,8 +71,8 @@
 
         <h3 class="font-medium text-gray-800 mt-3 text-sm sm:text-base leading-tight">{{ p.name }}</h3>
         <div class="flex items-center gap-1.5 mt-1 mb-3">
-          <span class="text-[#0F83B2] font-bold text-sm sm:text-base">${{ p.price }}</span>
-          <span *ngIf="p.oldPrice" class="text-gray-400 line-through text-xs">${{ p.oldPrice }}</span>
+          <span class="text-[#0F83B2] font-bold text-sm sm:text-base">₹{{ p.price }}</span>
+          <span *ngIf="p.oldPrice" class="text-gray-400 line-through text-xs">₹{{ p.oldPrice }}</span>
         </div>
 
         <button (click)="addToCart(p)"
