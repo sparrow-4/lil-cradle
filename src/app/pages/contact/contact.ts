@@ -13,8 +13,6 @@ export class Contact implements OnInit {
   info = SITE_CONTENT.companyInfo;
 
   ngOnInit() {
-    setTimeout(() => {
-      this.isLoading = false;
-    }, 700);
+    this.isLoading = false;
   }
 }

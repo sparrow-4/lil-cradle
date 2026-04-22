@@ -5,29 +5,7 @@
     <p class="text-gray-600">We'd love to hear from you. Please fill out this form and we will get back to you shortly.</p>
   </div>
 
-  <!-- Loading Skeletons -->
-  <div *ngIf="isLoading" class="flex flex-col md:flex-row gap-16 item-start">
-    <div class="flex-1 bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6">
-       <div class="grid grid-cols-2 gap-6">
-          <div class="h-14 shimmer rounded-lg"></div>
-          <div class="h-14 shimmer rounded-lg"></div>
-       </div>
-       <div class="h-14 w-full shimmer rounded-lg"></div>
-       <div class="h-32 w-full shimmer rounded-lg"></div>
-       <div class="h-14 w-full shimmer rounded-xl mt-4"></div>
-    </div>
-    <div class="w-full md:w-[400px] space-y-8">
-       <div class="h-8 w-1/2 shimmer rounded mb-6"></div>
-       <div class="space-y-4">
-          <div class="h-16 w-full shimmer rounded"></div>
-          <div class="h-16 w-full shimmer rounded"></div>
-          <div class="h-16 w-full shimmer rounded"></div>
-       </div>
-       <div class="h-48 w-full shimmer rounded-xl"></div>
-    </div>
-  </div>
-
-  <div *ngIf="!isLoading" class="flex flex-col md:flex-row gap-16 item-start">
+  <div class="flex flex-col md:flex-row gap-16 item-start">
     
     <!-- Contact Form -->
     <div class="flex-1 bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
@@ -79,8 +57,17 @@
           <p class="text-gray-600">{{ info.hoursLine1 }}<br>{{ info.hoursLine2 }}</p>
         </div>
         
-        <div class="pt-6 border-t border-gray-200 object-cover rounded-xl overflow-hidden shadow-inner h-48 bg-gray-100 flex items-center justify-center text-gray-400">
-          <p>[ Map Embed Placeholder ]</p>
+        <div class="pt-6 border-t border-gray-200">
+          <div class="w-full h-64 rounded-2xl overflow-hidden border border-gray-100 shadow-lg shadow-blue-500/5">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d2328.4282525532453!2d75.92614171280927!3d11.043579643996795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTHCsDAyJzM2LjUiTiA3NcKwNTUnMzEuOCJF!5e0!3m2!1sen!2sin!4v1776860124052!5m2!1sen!2sin" 
+              class="w-full h-full" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
         </div>
       </div>
     </div>
