@@ -24,6 +24,37 @@ export class AdminSettings {
     });
   }
 
+  addBanner() {
+    this.banners.push({
+      tagline: 'New Collection',
+      headline: 'Luxury Baby Essentials',
+      buttonText: 'Shop Now',
+      buttonLink: '/shop',
+      image: 'images/p1.jpg',
+      bgColor: '#FDFCFB'
+    });
+  }
+
+  removeBanner(index: number) {
+    if (confirm('Are you sure you want to remove this banner?')) {
+      this.banners.splice(index, 1);
+    }
+  }
+
+  addCategory() {
+    this.categories.push({
+      name: 'New Category',
+      image: 'images/p1.jpg',
+      link: '/shop'
+    });
+  }
+
+  removeCategory(index: number) {
+    if (confirm('Are you sure you want to remove this category?')) {
+      this.categories.splice(index, 1);
+    }
+  }
+
   uploadImage(event: any, section: string, index: number) {
     const file = event.target.files[0];
     if (file) {
