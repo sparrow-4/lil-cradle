@@ -1,17 +1,19 @@
-<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 absolute inset-0 z-[100] bg-gray-50">
-  
+<div
+  class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 absolute inset-0 z-[100] bg-gray-50">
+
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
     <img class="mx-auto h-20 w-auto object-contain" src="/images/lil-c.png" alt="Lil Cradle Logo">
     <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-      Admin Central
+      Login
     </h2>
   </div>
 
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white py-8 px-4 shadow sm:rounded-2xl sm:px-10 border border-gray-100">
-      
+
       <!-- Error Message -->
-      <div *ngIf="error" class="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm text-center font-medium">
+      <div *ngIf="error"
+        class="mb-4 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm text-center font-medium">
         {{ error }}
       </div>
 
@@ -19,25 +21,34 @@
         <div>
           <label class="block text-sm font-medium text-gray-700">Email address</label>
           <div class="mt-1">
-            <input name="email" type="email" [(ngModel)]="email" required class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#0F83B2] focus:border-[#0F83B2] sm:text-sm">
+            <input name="email" type="email" [(ngModel)]="email" required
+              class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#0F83B2] focus:border-[#0F83B2] sm:text-sm">
           </div>
         </div>
 
         <div>
-           <label class="block text-sm font-medium text-gray-700">Password</label>
+          <label class="block text-sm font-medium text-gray-700">Password</label>
           <div class="mt-1">
-            <input name="password" type="password" [(ngModel)]="password" required class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#0F83B2] focus:border-[#0F83B2] sm:text-sm">
+            <input name="password" type="password" [(ngModel)]="password" required
+              class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#0F83B2] focus:border-[#0F83B2] sm:text-sm">
           </div>
         </div>
 
         <div>
-          <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-bold text-white bg-[#0F83B2] hover:bg-opacity-90 transition">
+          <button type="submit"
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-bold text-white bg-[#0F83B2] hover:bg-opacity-90 transition">
             Sign in
           </button>
         </div>
       </form>
-      
-      <p class="text-center text-xs text-gray-400 mt-6 pt-6 border-t font-medium"><a routerLink="/" class="hover:text-[#0F83B2]">← Back to Storefront</a></p>
+
+      <p class="text-center text-xs text-gray-400 mt-6 pt-6 border-t font-medium"><a routerLink="/"
+          class="hover:text-[#0F83B2]">← Back to Storefront</a></p>
+
+      <p class="text-center text-xs text-gray-500 mt-3 font-medium">
+        Don't have an account?
+        <a routerLink="/register" class="text-[#0F83B2] font-semibold hover:underline">Create one</a>
+      </p>
 
     </div>
   </div>
