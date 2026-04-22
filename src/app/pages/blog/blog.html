@@ -21,7 +21,7 @@
     <!-- Blog Posts Loop -->
     <a *ngFor="let post of posts" href="#" class="group block">
       <div class="w-full flex-shrink-0 mb-4 overflow-hidden rounded-2xl h-64" [style.backgroundColor]="post.bg">
-        <img *ngIf="post.image" [src]="post.image" loading="lazy" class="w-full h-full object-contain group-hover:scale-105 transition duration-700">
+        <img *ngIf="post.image" [src]="post.image" class="w-full h-full object-contain group-hover:scale-105 transition duration-700">
       </div>
       <p class="text-sm font-semibold mb-2" [style.color]="post.catColor">{{ post.category }}</p>
       <h3 class="text-xl font-bold text-gray-800 mb-2 transition hover:opacity-80"

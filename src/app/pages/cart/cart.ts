@@ -2,6 +2,7 @@ import { Component, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CartService } from '../../services/cart';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +12,7 @@ import { CartService } from '../../services/cart';
 })
 export class Cart implements OnInit {
   isLoading = true;
-  constructor(public cart: CartService) {}
+  constructor(public cart: CartService, public api: ApiService) {}
 
   ngOnInit() {
     setTimeout(() => {

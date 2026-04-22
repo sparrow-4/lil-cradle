@@ -55,7 +55,7 @@
            class="bg-white rounded-xl p-3 sm:p-4 shadow-sm group border border-gray-100 relative flex flex-col">
         <!-- Image -->
         <div class="relative bg-[#f8f9fa] rounded-lg">
-          <img [src]="api.getImageUrl(p.image)" loading="lazy" class="w-full h-[140px] sm:h-[200px] object-contain">
+          <img [src]="api.getImageUrl(p.image)" class="w-full h-[140px] sm:h-[200px] object-contain">
           <span *ngIf="p.sale" class="absolute top-2 left-2 bg-[#b89c84] text-white text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded shadow">SALE</span>
         </div>
 
