@@ -13,6 +13,7 @@ import { AdminAuthService } from '../../services/admin-auth';
 export class Register {
   name = '';
   email = '';
+  phone = '';
   password = '';
   confirmPassword = '';
   error = '';
@@ -30,7 +31,7 @@ export class Register {
     this.error = '';
     this.success = '';
 
-    if (!this.name.trim() || !this.email.trim() || !this.password || !this.confirmPassword) {
+    if (!this.name.trim() || !this.email.trim() || !this.phone.trim() || !this.password || !this.confirmPassword) {
       this.error = 'Please fill in all fields.';
       return;
     }
@@ -50,7 +51,11 @@ export class Register {
     // Simulate async registration (replace with real API call)
     setTimeout(() => {
       this.loading = false;
-      this.auth.registerUser(this.name, this.email, this.password);
+      const registered = this.auth.registerUser(this.name, this.email, this.phone, this.password);
+      if (!registered) {
+        this.error = 'Email or phone already registered.';
+        return;
+      }
       this.success = 'Account created! Redirecting to login…';
       setTimeout(() => this.router.navigate(['/login']), 1500);
     }, 900);

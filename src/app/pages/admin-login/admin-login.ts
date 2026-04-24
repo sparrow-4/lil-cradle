@@ -12,14 +12,14 @@ import { AdminAuthService } from '../../services/admin-auth';
   styleUrl: './admin-login.css',
 })
 export class AdminLogin {
-  email = '';
+  identifier = '';
   password = '';
   error = '';
 
   constructor(private auth: AdminAuthService, private router: Router) {}
 
   login() {
-    const result = this.auth.login(this.email, this.password);
+    const result = this.auth.login(this.identifier, this.password);
     
     if (result === 'admin') {
       this.router.navigate(['/admin/dashboard']);

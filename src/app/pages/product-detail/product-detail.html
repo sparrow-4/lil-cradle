@@ -26,22 +26,10 @@
         <span class="text-sm text-gray-500">(128 reviews)</span>
       </div>
       
-      <!-- Price -->
-      <div class="flex items-center gap-4 mb-8">
-        <span class="text-3xl font-bold text-[#0F83B2]">₹{{ product.price }}</span>
-        <span *ngIf="product.oldPrice" class="text-xl text-gray-400 line-through">₹{{ product.oldPrice }}</span>
-      </div>
-
       <!-- Description -->
       <div class="mb-8 content text-gray-600 leading-relaxed">
         <p>Expertly curated for your little joy, this premium collection blends comfort with aesthetic appeal. Each piece is hand-selected to ensure the highest quality for traditional ceremonies and everyday luxury.</p>
         
-        <!-- Customization Note (Highlighted for Hampers/Kits) -->
-        <div class="mt-6 p-4 bg-[#F9F4EE] border-l-4 border-[#C49A4A] rounded-r-xl">
-           <p class="text-sm font-bold text-[#5C3D1E] mb-1 italic">Want it customized?</p>
-           <p class="text-xs text-[#8C6D4F]">This item is eligible for bespoke personalization. We can customize colors, names, and contents via WhatsApp consultation.</p>
-        </div>
-
         <ul class="list-disc ml-5 mt-6 space-y-2 text-sm">
           <li>Premium, skin-friendly materials</li>
           <li>Handmade attention to detail</li>
@@ -49,17 +37,64 @@
         </ul>
       </div>
 
-      <!-- Action Area -->
-      <div class="flex items-center gap-6 border-t border-gray-100 pt-8 mt-auto">
-        <!-- Quantity counter -->
-        <div class="flex items-center bg-gray-100 rounded-full px-4 py-2 border border-gray-200">
-          <button class="text-xl font-bold px-3 text-gray-500 hover:text-[#0F83B2]" (click)="quantity = quantity > 1 ? quantity - 1 : 1">-</button>
-          <span class="px-4 font-semibold w-12 text-center">{{ quantity }}</span>
-          <button class="text-xl font-bold px-3 text-gray-500 hover:text-[#0F83B2]" (click)="quantity = quantity + 1">+</button>
+      <!-- Price -->
+      <div class="flex items-center gap-4 mb-8">
+        <span class="text-3xl font-bold text-[#2C2C2C]">₹{{ product.price + (product.isCustomizable ? (product.customizationPrice || 0) : 0) }}</span>
+        <span *ngIf="product.oldPrice" class="text-xl text-[#A8A8A8] line-through">₹{{ product.oldPrice }}</span>
+        <span *ngIf="product.isCustomizable && product.customizationPrice > 0" class="text-xs text-[#C5A059] font-bold uppercase tracking-widest bg-[#FAF9F6] px-3 py-1 rounded-full border border-[#E5E1D8]">
+          + ₹{{product.customizationPrice}} for personalization
+        </span>
+      </div>
+
+      <!-- ── CUSTOMIZATION SECTION ── -->
+      <div *ngIf="product.isCustomizable" class="mb-10 p-6 bg-[#FAF9F6] rounded-3xl border border-[#E5E1D8] animate-fade-in">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-full bg-[#C5A059] flex items-center justify-center text-white">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-['Playfair_Display'] text-[#2C2C2C]">Personalize Your Item</h3>
+            <p class="text-xs text-[#A8A8A8]">Made especially for your little one</p>
+          </div>
         </div>
 
-        <button (click)="addToCart()" class="flex-1 bg-[#0F83B2] text-white text-lg font-bold py-4 rounded-full hover:bg-opacity-90 transition shadow-lg flex items-center justify-center gap-3">
-          Add to Cart
+        <div class="space-y-5">
+          <div *ngIf="product.customNameLabel">
+            <label class="block text-[10px] font-bold uppercase tracking-widest text-[#A8A8A8] mb-2">{{product.customNameLabel}}</label>
+            <input type="text" [(ngModel)]="customization.customName" [placeholder]="'Enter ' + product.customNameLabel" class="w-full px-5 py-3 bg-white border border-[#E5E1D8] rounded-2xl focus:ring-2 focus:ring-[#C5A059]/20 transition outline-none">
+          </div>
+
+          <div *ngIf="product.customMessageLabel">
+            <label class="block text-[10px] font-bold uppercase tracking-widest text-[#A8A8A8] mb-2">{{product.customMessageLabel}}</label>
+            <textarea [(ngModel)]="customization.customMessage" [placeholder]="'Enter ' + product.customMessageLabel" rows="2" class="w-full px-5 py-3 bg-white border border-[#E5E1D8] rounded-2xl focus:ring-2 focus:ring-[#C5A059]/20 transition outline-none resize-none"></textarea>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div *ngIf="product.colorVariants?.length">
+              <label class="block text-[10px] font-bold uppercase tracking-widest text-[#A8A8A8] mb-2">Select Color</label>
+              <select [(ngModel)]="customization.selectedColor" class="w-full px-5 py-3 bg-white border border-[#E5E1D8] rounded-2xl focus:ring-2 focus:ring-[#C5A059]/20 transition outline-none cursor-pointer">
+                <option *ngFor="let color of product.colorVariants" [value]="color">{{color}}</option>
+              </select>
+            </div>
+            <div *ngIf="product.sizeVariants?.length">
+              <label class="block text-[10px] font-bold uppercase tracking-widest text-[#A8A8A8] mb-2">Select Size</label>
+              <select [(ngModel)]="customization.selectedSize" class="w-full px-5 py-3 bg-white border border-[#E5E1D8] rounded-2xl focus:ring-2 focus:ring-[#C5A059]/20 transition outline-none cursor-pointer">
+                <option *ngFor="let size of product.sizeVariants" [value]="size">{{size}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quantity & Add to Cart -->
+      <div class="flex flex-wrap items-center gap-4 mb-10">
+        <div class="flex items-center border border-[#E5E1D8] rounded-full p-1 bg-white">
+          <button (click)="quantity = quantity > 1 ? quantity - 1 : 1" class="w-10 h-10 rounded-full hover:bg-[#FAF9F6] transition flex items-center justify-center text-[#5C5C5C]">-</button>
+          <span class="w-12 text-center font-bold text-[#2C2C2C]">{{ quantity }}</span>
+          <button (click)="quantity = quantity + 1" class="w-10 h-10 rounded-full hover:bg-[#FAF9F6] transition flex items-center justify-center text-[#5C5C5C]">+</button>
+        </div>
+        <button (click)="addToCart()" class="flex-1 min-w-[200px] py-4 bg-[#2C2C2C] text-white rounded-full font-bold hover:bg-black transition shadow-xl shadow-black/10">
+          Add to Collection • ₹{{ totalPrice }}
         </button>
       </div>
     </div>

@@ -1,7 +1,14 @@
 import { Injectable, signal, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
-export interface UserRecord { name: string; email: string; password?: string; role: 'admin' | 'user'; }
+export interface UserRecord { 
+  name: string; 
+  email: string; 
+  phone?: string;
+  password?: string; 
+  role: 'admin' | 'user'; 
+  hasUsedDiscount?: boolean;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +34,9 @@ export class AdminAuthService {
     }
   }
 
-  login(email: string, pass: string): 'admin' | 'user' | 'error' {
-    if (email === 'admin@gmail.com' && pass === 'admin123') {
+  login(identifier: string, pass: string): 'admin' | 'user' | 'error' {
+    // Admin login
+    if (identifier === 'admin@gmail.com' && pass === 'admin123') {
       const admin: UserRecord = { name: 'Admin', email: 'admin@gmail.com', role: 'admin' };
       this.isAdmin.set(true);
       this.currentUser.set(admin);
@@ -37,11 +45,18 @@ export class AdminAuthService {
       return 'admin';
     } 
     
-    // Check registered users
+    // Check registered users by email OR phone
     const users: UserRecord[] = JSON.parse(localStorage.getItem(this.usersKey) ?? '[]');
-    const found = users.find(u => u.email === email && u.password === pass);
+    const found = users.find(u => (u.email === identifier || u.phone === identifier) && u.password === pass);
+    
     if (found) {
-      const user: UserRecord = { name: found.name, email: found.email, role: 'user' };
+      const user: UserRecord = { 
+        name: found.name, 
+        email: found.email, 
+        phone: found.phone,
+        role: 'user',
+        hasUsedDiscount: found.hasUsedDiscount 
+      };
       this.isLoggedUser.set(true);
       this.currentUser.set(user);
       localStorage.setItem(this.userKey, 'true');
@@ -52,11 +67,21 @@ export class AdminAuthService {
     return 'error';
   }
 
-  registerUser(name: string, email: string, password: string): boolean {
+  registerUser(name: string, email: string, phone: string, password: string): boolean {
     if (!isPlatformBrowser(this.platformId)) return false;
-    const users: any[] = JSON.parse(localStorage.getItem(this.usersKey) ?? '[]');
-    if (users.find(u => u.email === email)) return false; // already exists
-    users.push({ name, email, password, role: 'user' });
+    const users: UserRecord[] = JSON.parse(localStorage.getItem(this.usersKey) ?? '[]');
+    
+    // Check if email or phone already exists
+    if (users.find(u => u.email === email || (phone && u.phone === phone))) return false; 
+    
+    users.push({ 
+      name, 
+      email, 
+      phone, 
+      password, 
+      role: 'user',
+      hasUsedDiscount: false // New users have not used their discount yet
+    });
     localStorage.setItem(this.usersKey, JSON.stringify(users));
     return true;
   }
@@ -85,6 +110,22 @@ export class AdminAuthService {
           users[index] = { ...users[index], ...updatedUser };
           localStorage.setItem(this.usersKey, JSON.stringify(users));
         }
+      }
+    }
+  }
+
+  markDiscountAsUsed() {
+    const user = this.currentUser();
+    if (user && user.role === 'user') {
+      const updatedUser = { ...user, hasUsedDiscount: true };
+      this.currentUser.set(updatedUser);
+      localStorage.setItem(this.currentUserKey, JSON.stringify(updatedUser));
+      
+      const users: UserRecord[] = JSON.parse(localStorage.getItem(this.usersKey) ?? '[]');
+      const index = users.findIndex(u => u.email === user.email);
+      if (index !== -1) {
+        users[index].hasUsedDiscount = true;
+        localStorage.setItem(this.usersKey, JSON.stringify(users));
       }
     }
   }

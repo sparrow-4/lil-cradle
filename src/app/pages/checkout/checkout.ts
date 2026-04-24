@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart';
 import { OrderService } from '../../services/order';
+import { AdminAuthService } from '../../services/admin-auth';
 
 @Component({
   selector: 'app-checkout',
@@ -20,7 +21,12 @@ export class Checkout implements OnInit {
     city: ''
   };
 
-  constructor(public cart: CartService, private orderService: OrderService, private router: Router) {}
+  constructor(
+    public cart: CartService, 
+    private orderService: OrderService, 
+    private router: Router,
+    public auth: AdminAuthService
+  ) {}
 
   ngOnInit() {
     this.isLoading = false;
@@ -42,6 +48,8 @@ export class Checkout implements OnInit {
     this.isProcessing = true;
 
     const number = "917902805012"; 
+    const subtotal = this.cart.subtotal();
+    const discount = this.cart.discountAmount();
     const total = this.cart.total();
     
     let message = `*New Order from Lil Cradle* \n\n`;
@@ -55,7 +63,12 @@ export class Checkout implements OnInit {
       message += `- ${item.qty}x ${item.name} (₹${item.price})\n`;
     });
 
-    message += `\n*TOTAL: ₹${total}*`;
+    if (discount > 0) {
+      message += `\nSubtotal: ₹${subtotal}`;
+      message += `\nDiscount (10% First Order): -₹${discount}`;
+    }
+
+    message += `\n\n*TOTAL: ₹${total}*`;
 
     // Save to Admin system first
     this.orderService.addOrder({
@@ -65,6 +78,11 @@ export class Checkout implements OnInit {
       city: this.customer.city
     }, this.cart.items(), total).subscribe({
       next: () => {
+        // Mark discount as used
+        if (discount > 0) {
+          this.auth.markDiscountAsUsed();
+        }
+
         const encodedMessage = encodeURIComponent(message);
         window.open(`https://wa.me/${number}?text=${encodedMessage}`, '_blank');
         

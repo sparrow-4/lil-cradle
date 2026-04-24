@@ -1,13 +1,17 @@
-<div class="hidden md:block">
-  <app-top-bar></app-top-bar>
+<div *ngIf="!isAdmin">
+  <div class="hidden md:block">
+    <app-top-bar></app-top-bar>
+  </div>
+  <app-navbar></app-navbar>
 </div>
-<app-navbar></app-navbar>
 
 <main class="bg-[#ffffff] min-h-screen">
   <router-outlet/>
 </main>
 
-<app-footer></app-footer>
+<app-footer *ngIf="!isAdmin"></app-footer>
+
+<app-toast-container></app-toast-container>
 
 <!-- SCROLL TO TOP FAB -->
 <button 

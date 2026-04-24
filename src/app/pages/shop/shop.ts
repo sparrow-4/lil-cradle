@@ -13,12 +13,23 @@ import { ApiService } from '../../services/api.service';
 export class Shop implements OnInit {
   allProducts = signal<any[]>([]);
   activeCategory = signal<string>('all');
+  searchQuery = signal<string>('');
   isLoading = true;
 
   filteredProducts = computed(() => {
+    let products = this.allProducts();
     const cat = this.activeCategory();
-    if (cat === 'all') return this.allProducts();
-    return this.allProducts().filter(p => p.category?.toLowerCase() === cat.toLowerCase());
+    const q = this.searchQuery().toLowerCase();
+
+    if (cat !== 'all') {
+      products = products.filter(p => p.category?.toLowerCase() === cat.toLowerCase());
+    }
+
+    if (q) {
+      products = products.filter(p => p.name.toLowerCase().includes(q));
+    }
+
+    return products;
   });
 
   constructor(
@@ -30,6 +41,7 @@ export class Shop implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.activeCategory.set(params['category'] || 'all');
+      this.searchQuery.set(params['q'] || '');
     });
 
     this.api.getProducts().subscribe({

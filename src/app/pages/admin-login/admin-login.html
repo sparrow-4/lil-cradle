@@ -19,9 +19,10 @@
 
       <form class="space-y-6" (ngSubmit)="login()">
         <div>
-          <label class="block text-sm font-medium text-gray-700">Email address</label>
+          <label class="block text-sm font-medium text-gray-700">Email or Phone</label>
           <div class="mt-1">
-            <input name="email" type="email" [(ngModel)]="email" required
+            <input name="identifier" type="text" [(ngModel)]="identifier" required
+              placeholder="Email or phone number"
               class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#0F83B2] focus:border-[#0F83B2] sm:text-sm">
           </div>
         </div>

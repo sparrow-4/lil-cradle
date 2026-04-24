@@ -17,6 +17,14 @@ export class ProductDetail implements OnInit {
   product: any;
   quantity = 1;
 
+  // Customization State
+  customization = {
+    customName: '',
+    customMessage: '',
+    selectedColor: '',
+    selectedSize: ''
+  };
+
   isLoading = true;
   reviews: any[] = [];
   reviewData = {
@@ -42,21 +50,24 @@ export class ProductDetail implements OnInit {
 
     this.route.paramMap.subscribe(params => {
       this.isLoading = true;
-      const name = params.get('id');
+      const id = params.get('id');
       
-      this.api.getProducts().subscribe({
-        next: (data) => {
-          this.product = data.find((p: any) => p.name === name) || data[0];
-          this.isLoading = false;
-          if(this.product?._id) {
+      if (id) {
+        this.api.getProduct(id).subscribe({
+          next: (data) => {
+            this.product = data;
+            this.isLoading = false;
             this.loadReviews();
+            // Reset customization defaults
+            if (this.product.colorVariants?.length) this.customization.selectedColor = this.product.colorVariants[0];
+            if (this.product.sizeVariants?.length) this.customization.selectedSize = this.product.sizeVariants[0];
+          },
+          error: (err) => {
+            console.error('Failed to load product', err);
+            this.isLoading = false;
           }
-        },
-        error: (err) => {
-          console.error('Failed to load product', err);
-          this.isLoading = false;
-        }
-      });
+        });
+      }
     });
   }
 
@@ -91,10 +102,17 @@ export class ProductDetail implements OnInit {
     });
   }
 
+  get totalPrice(): number {
+    if (!this.product) return 0;
+    let base = this.product.price;
+    if (this.product.isCustomizable) base += (this.product.customizationPrice || 0);
+    return base * this.quantity;
+  }
+
   addToCart() {
+    const custom = this.product.isCustomizable ? { ...this.customization } : undefined;
     for (let i = 0; i < this.quantity; i++) {
-      this.cart.addToCart(this.product);
+      this.cart.addToCart(this.product, custom);
     }
-    alert(this.quantity + 'x ' + this.product.name + ' added to cart!');
   }
 }
