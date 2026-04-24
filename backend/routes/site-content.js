@@ -3,16 +3,13 @@ const router = express.Router();
 const SiteContent = require('../models/SiteContent');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, 'site-' + uuidv4() + ext);
-  }
-});
-const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
+// Use memory storage to process with sharp
+const storage = multer.memoryStorage();
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 // GET site content
 router.get('/', async (req, res) => {
@@ -99,7 +96,17 @@ router.put('/promos', async (req, res) => {
 router.post('/upload/:section/:index', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No file' });
-    const imageUrl = '/uploads/' + req.file.filename;
+
+    const filename = 'site-' + uuidv4() + '.webp';
+    const outputPath = path.join(__dirname, '../uploads/', filename);
+
+    // Process with sharp: Resize, compress and convert to WebP
+    await sharp(req.file.buffer)
+      .resize(1200, 1200, { fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toFile(outputPath);
+
+    const imageUrl = '/uploads/' + filename;
     const { section, index } = req.params;
     const idx = parseInt(index);
 

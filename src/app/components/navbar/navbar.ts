@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LucideAngularModule, ShoppingCart, Search, Menu, User } from 'lucide-angular';
 import { MobileMenubar } from "../mobile-menubar/mobile-menubar";
@@ -14,10 +14,11 @@ import { ApiService } from '../../services/api.service';
   imports: [RouterModule, LucideAngularModule, CommonModule, MobileMenubar, FormsModule],
   templateUrl: './navbar.html',
 })
-export class Navbar {
+export class Navbar implements OnInit {
 
   isMenuOpen = false;
   searchQuery = '';
+  allProducts: any[] = [];
   searchResults: any[] = [];
   isSearchOpen = false;
 
@@ -28,16 +29,20 @@ export class Navbar {
     private api: ApiService
   ) {}
 
+  ngOnInit() {
+    this.api.getProducts().subscribe(data => {
+      this.allProducts = data;
+    });
+  }
+
   onSearchInput() {
     const q = this.searchQuery.trim().toLowerCase();
-    if (q.length > 1) {
-      this.api.getProducts().subscribe((products: any[]) => {
-        this.searchResults = products.filter((p: any) => 
-          p.name.toLowerCase().includes(q) || 
-          p.category?.toLowerCase().includes(q)
-        ).slice(0, 5); // Show top 5
-        this.isSearchOpen = true;
-      });
+    if (q.length > 0) {
+      this.searchResults = this.allProducts.filter((p: any) => 
+        (p.name?.toLowerCase().includes(q)) || 
+        (p.category?.toLowerCase().includes(q))
+      ).slice(0, 5);
+      this.isSearchOpen = true;
     } else {
       this.searchResults = [];
       this.isSearchOpen = false;

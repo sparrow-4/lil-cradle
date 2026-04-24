@@ -1,7 +1,7 @@
-<nav class="bg-white shadow-sm relative z-50 mt-4 md:mt-[25px]">
+<nav class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-20 transition-all duration-300">
 
-  <div class="max-w-[1440px] mx-auto px-4 md:px-6 h-[40px] md:h-[90px] flex items-center justify-between">
-    
+  <div class="max-w-[1440px] mx-auto px-4 md:px-6 h-[50px] md:h-[100px] flex items-center justify-between">
+
     <!-- LEFT -->
     <div class="flex items-center">
       <img src="images/lil-c.png" class="h-20 md:h-40 object-contain">
@@ -20,25 +20,20 @@
 
       <!-- Search (hidden on small) -->
       <div class="hidden sm:flex items-center relative group">
-        <div class="flex items-center border border-gray-300 rounded-full px-3 py-1 md:px-4 md:py-2 bg-white focus-within:border-[#C5A059] transition">
-          <input 
-            type="text" 
-            placeholder="Search" 
-            [(ngModel)]="searchQuery"
-            (input)="onSearchInput()"
-            (keyup.enter)="onSearch()"
-            class="outline-none text-sm px-2 w-24 md:w-40 bg-transparent"
-          />
-          <lucide-icon [img]="icons.search" class="w-4 h-4 text-gray-600 cursor-pointer" (click)="onSearch()"></lucide-icon>
+        <div
+          class="flex items-center border border-gray-300 rounded-full px-3 py-1 md:px-4 md:py-2 bg-white focus-within:border-[#C5A059] transition">
+          <input type="text" placeholder="Search" [(ngModel)]="searchQuery" (input)="onSearchInput()"
+            (keyup.enter)="onSearch()" class="outline-none text-sm px-2 w-24 md:w-40 bg-transparent" />
+          <lucide-icon [img]="icons.search" class="w-4 h-4 text-gray-600 cursor-pointer"
+            (click)="onSearch()"></lucide-icon>
         </div>
 
-        <!-- Search Results Dropdown (Matching Reference Image) -->
-        <div *ngIf="isSearchOpen && searchResults.length > 0" 
-             class="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[100] animate-fade-in min-w-[300px]">
+        <!-- Search Results Dropdown -->
+        <div *ngIf="isSearchOpen && searchResults.length > 0"
+          class="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-[100] animate-fade-in min-w-[300px]">
           <div class="flex flex-col">
-            <div *ngFor="let result of searchResults; let last = last" 
-                 (click)="goToProduct(result._id)"
-                 class="flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 cursor-pointer transition-colors group">
+            <div *ngFor="let result of searchResults; let last = last" (click)="goToProduct(result._id)"
+              class="flex items-center gap-3 px-5 py-3.5 hover:bg-gray-50 cursor-pointer transition-colors group">
               <lucide-icon [img]="icons.search" class="w-4 h-4 text-gray-400 group-hover:text-gray-600"></lucide-icon>
               <span class="text-[14px] text-gray-700 group-hover:text-black font-medium">{{result.name}}</span>
             </div>
@@ -53,7 +48,8 @@
       <!-- Cart -->
       <div class="relative cursor-pointer" routerLink="/cart">
         <lucide-icon [img]="icons.cart" class="w-5 h-5 text-gray-700"></lucide-icon>
-        <span *ngIf="cart.items().length > 0" class="absolute -top-2 -right-2 bg-red-400 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">
+        <span *ngIf="cart.items().length > 0"
+          class="absolute -top-2 -right-2 bg-red-400 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">
           {{ cart.items().length }}
         </span>
       </div>
@@ -61,30 +57,34 @@
       <!-- Profile -->
       <div class="flex items-center gap-3">
         @if (auth.isLoggedUser()) {
-          <a routerLink="/profile" class="flex items-center gap-2 group">
-            <div class="w-8 h-8 rounded-full bg-[#C5A059] flex items-center justify-center text-white text-xs font-serif group-hover:scale-105 transition-transform">
-              {{ (auth.currentUser()?.name || 'U')[0].toUpperCase() }}
-            </div>
-          </a>
+        <a routerLink="/profile" class="flex items-center gap-2 group">
+          <div
+            class="w-8 h-8 rounded-full bg-[#C5A059] flex items-center justify-center text-white text-xs font-serif group-hover:scale-105 transition-transform">
+            {{ (auth.currentUser()?.name || 'U')[0].toUpperCase() }}
+          </div>
+        </a>
         } @else if (auth.isAdmin()) {
-          <a routerLink="/admin/dashboard" class="flex items-center gap-2 group">
-            <div class="w-8 h-8 rounded-full bg-[#3D2B1F] flex items-center justify-center text-white text-xs font-serif group-hover:scale-105 transition-transform">
-              A
-            </div>
-          </a>
+        <a routerLink="/admin/dashboard" class="flex items-center gap-2 group">
+          <div
+            class="w-8 h-8 rounded-full bg-[#3D2B1F] flex items-center justify-center text-white text-xs font-serif group-hover:scale-105 transition-transform">
+            A
+          </div>
+        </a>
         } @else {
-          <a routerLink="/login" class="text-gray-700 hover:text-[#C5A059] transition">
-            <lucide-icon [img]="icons.user" class="w-5 h-5"></lucide-icon>
-          </a>
+        <a routerLink="/login" class="text-gray-700 hover:text-[#C5A059] transition">
+          <lucide-icon [img]="icons.user" class="w-5 h-5"></lucide-icon>
+        </a>
         }
       </div>
 
       <!-- MOBILE MENU BUTTON -->
-      <app-mobile-menubar/>
+      <app-mobile-menubar />
 
     </div>
 
+
   </div>
 
- 
+
+
 </nav>

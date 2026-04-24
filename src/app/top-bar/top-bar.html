@@ -1,7 +1,7 @@
-<div class="bg-[#0F83B2] text-white py-1 relative">
+<div class="bg-[#0F83B2] text-white py-1 relative z-30">
   <div class="max-w-[1440px] mx-auto flex justify-end items-center px-6 py-2 text-sm">
     <div class="space-x-4">
-      
+
       <!-- Public / Not Logged In -->
       <ng-container *ngIf="!auth.isAdmin() && !auth.isLoggedUser()">
         <a routerLink="/login" class="hover:text-gray-200 transition font-medium">Login / Register</a>
@@ -20,26 +20,14 @@
       </ng-container>
 
     </div>
-
-  <!-- Wave -->
-  <div class="absolute -bottom-4 left-0 w-full overflow-hidden leading-none">
-    <svg viewBox="0 0 500 50" preserveAspectRatio="none" class="w-full h-6">
-      <path 
-        d="M0,30 
-           Q25,50 50,30 
-           T100,30 
-           T150,30 
-           T200,30 
-           T250,30 
-           T300,30 
-           T350,30 
-           T400,30 
-           T450,30 
-           T500,30 
-           L500,0 L0,0 Z" 
-        class="fill-[#0F83B2]">
-      </path>
-    </svg>
   </div>
 
+  <!-- Decorative Wave -->
+  <div class="absolute -bottom-5 left-0 w-full leading-none z-30 pointer-events-none">
+    <svg viewBox="0 0 1200 60" preserveAspectRatio="none" class="w-full h-5">
+      <path
+        d="M0,0 L0,30 Q30,60 60,30 T120,30 T180,30 T240,30 T300,30 T360,30 T420,30 T480,30 T540,30 T600,30 T660,30 T720,30 T780,30 T840,30 T900,30 T960,30 T1020,30 T1080,30 T1140,30 T1200,30 L1200,0 Z"
+        fill="#0F83B2" />
+    </svg>
+  </div>
 </div>

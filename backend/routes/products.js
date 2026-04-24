@@ -3,17 +3,13 @@ const router = express.Router();
 const Product = require('../models/Product');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
 
-// Multer config for product images
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, 'product-' + uuidv4() + ext);
-  }
-});
-const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
+// Use memory storage to process with sharp
+const storage = multer.memoryStorage();
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 // GET all products
 router.get('/', async (req, res) => {
@@ -89,7 +85,17 @@ router.delete('/:id', async (req, res) => {
 router.post('/:id/image', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
-    const imageUrl = '/uploads/' + req.file.filename;
+
+    const filename = 'product-' + uuidv4() + '.webp';
+    const outputPath = path.join(__dirname, '../uploads/', filename);
+
+    // Process with sharp: Resize, compress and convert to WebP
+    await sharp(req.file.buffer)
+      .resize(800, 800, { fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toFile(outputPath);
+
+    const imageUrl = '/uploads/' + filename;
     const product = await Product.findByIdAndUpdate(req.params.id, { image: imageUrl }, { new: true });
     res.json({ imageUrl, product });
   } catch (err) {

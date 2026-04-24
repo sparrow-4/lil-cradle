@@ -40,7 +40,7 @@
           
           <!-- Image (Clickable) -->
           <a [routerLink]="['/product', p._id]" class="block relative bg-[#f8f9fa] rounded-lg overflow-hidden group">
-            <img [src]="api.getImageUrl(p.image)" class="w-full h-[140px] sm:h-[200px] object-contain group-hover:scale-105 transition-transform duration-500">
+            <img [src]="api.getImageUrl(p.image)" loading="lazy" class="w-full h-[140px] sm:h-[200px] object-contain group-hover:scale-105 transition-transform duration-500">
             <span *ngIf="p.sale" class="absolute top-2 left-2 bg-[#b89c84] text-white text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded shadow">SALE</span>
           </a>
 

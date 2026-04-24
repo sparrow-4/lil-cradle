@@ -41,7 +41,7 @@
         <!-- IMAGE -->
         <div class="relative">
 
-          <img [src]="api.getImageUrl(p.image)" class="w-full h-[180px] object-contain">
+          <img [src]="api.getImageUrl(p.image)" loading="lazy" class="w-full h-[180px] object-contain">
 
           <!-- SALE BADGE -->
           <span *ngIf="p.sale" class="absolute top-2 left-2 bg-red-400 text-white text-xs px-2 py-1 rounded">

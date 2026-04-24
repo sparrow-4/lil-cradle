@@ -38,9 +38,15 @@ export class AdminProducts {
 
   applyFilters() {
     this.filteredProducts = this.products.filter(p => {
-      const matchesSearch = p.name.toLowerCase().includes(this.searchQuery.toLowerCase());
-      const matchesCategory = !this.filterCategory || p.category === this.filterCategory;
+      const q = this.searchQuery.toLowerCase();
+      const matchesSearch = (p.name?.toLowerCase().includes(q)) || 
+                           (p.category?.toLowerCase().includes(q));
+      
+      const matchesCategory = !this.filterCategory || 
+                             p.category?.toLowerCase() === this.filterCategory.toLowerCase();
+      
       const matchesType = !this.filterType || p.type === this.filterType;
+      
       return matchesSearch && matchesCategory && matchesType;
     });
   }

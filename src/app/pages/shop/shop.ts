@@ -26,7 +26,10 @@ export class Shop implements OnInit {
     }
 
     if (q) {
-      products = products.filter(p => p.name.toLowerCase().includes(q));
+      products = products.filter(p => 
+        p.name?.toLowerCase().includes(q) || 
+        p.category?.toLowerCase().includes(q)
+      );
     }
 
     return products;

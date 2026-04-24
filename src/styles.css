@@ -1,24 +1,31 @@
-/* style.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-  --color-primary: #ff4800;
-}
-
-/* Optional: create utility classes */
-.text-primary {
-  color: var(--color-primary);
-}
-
-.bg-top-primary {
-  background-color: var(--color-primary);
+  --color-primary: #0F83B2;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  @apply bg-[#FAF9F6] text-gray-800;
+  overflow-x: hidden;
+}
+
+/* Global Transitions */
+a, button, input, select, textarea {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Selection Color */
+::selection {
+  background-color: #0F83B2;
+  color: white;
 }
 
 /* Global Shimmer Skeleton Loader */
@@ -33,4 +40,33 @@ html {
 @keyframes placeholderShimmer {
   0% { background-position: -1000px 0; }
   100% { background-position: 1000px 0; }
+}
+
+/* Smooth Image Fade-In */
+img {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Utility Classes */
+.text-primary { color: var(--color-primary); }
+.bg-primary { background-color: var(--color-primary); }
+
+/* Custom Scrollbar for modern look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #0F83B2;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0d6d94;
 }
