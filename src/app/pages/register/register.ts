@@ -13,6 +13,7 @@ import { AdminAuthService } from '../../services/admin-auth';
 export class Register {
   name = '';
   email = '';
+  countryCode = '+91';
   phone = '';
   password = '';
   confirmPassword = '';
@@ -21,11 +22,51 @@ export class Register {
   loading = false;
   showPassword = false;
   showConfirm = false;
+  otpSent = false;
+  otpCode = '';
+  isOtpVerified = false;
+  otpLoading = false;
+
+  countryCodes = [
+    { code: '+91', name: 'India' },
+    { code: '+1', name: 'USA' },
+    { code: '+44', name: 'UK' },
+    { code: '+971', name: 'UAE' },
+    { code: '+65', name: 'Singapore' },
+    { code: '+61', name: 'Australia' }
+  ];
 
   constructor(private auth: AdminAuthService, private router: Router) {}
 
   togglePassword() { this.showPassword = !this.showPassword; }
   toggleConfirm() { this.showConfirm = !this.showConfirm; }
+
+  sendOtp() {
+    if (!this.phone.trim()) {
+      this.error = 'Please enter a phone number first.';
+      return;
+    }
+    this.otpLoading = true;
+    this.error = '';
+    
+    // Simulate sending OTP
+    setTimeout(() => {
+      this.otpLoading = false;
+      this.otpSent = true;
+      this.success = 'OTP sent to ' + this.countryCode + ' ' + this.phone;
+      // In a real app, you'd call a backend service here
+    }, 1200);
+  }
+
+  verifyOtp() {
+    if (this.otpCode === '123456') { // Mock OTP for testing
+      this.isOtpVerified = true;
+      this.success = 'Phone number verified successfully!';
+      this.error = '';
+    } else {
+      this.error = 'Invalid OTP. Please try again (Tip: use 123456).';
+    }
+  }
 
   register() {
     this.error = '';
@@ -33,6 +74,11 @@ export class Register {
 
     if (!this.name.trim() || !this.email.trim() || !this.phone.trim() || !this.password || !this.confirmPassword) {
       this.error = 'Please fill in all fields.';
+      return;
+    }
+
+    if (!this.isOtpVerified) {
+      this.error = 'Please verify your phone number with OTP first.';
       return;
     }
 
@@ -51,7 +97,8 @@ export class Register {
     // Simulate async registration (replace with real API call)
     setTimeout(() => {
       this.loading = false;
-      const registered = this.auth.registerUser(this.name, this.email, this.phone, this.password);
+      const fullPhone = this.countryCode + ' ' + this.phone;
+      const registered = this.auth.registerUser(this.name, this.email, fullPhone, this.password);
       if (!registered) {
         this.error = 'Email or phone already registered.';
         return;
